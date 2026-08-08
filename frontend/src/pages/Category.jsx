@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import api from "../api/axios.js";
 import ProductCard from "../components/ProductCard.jsx";
+import ServiceCard from "../components/ServiceCard.jsx";
 import JobCard from "../components/JobCard.jsx";
 
 const CONFIG = {
@@ -72,9 +73,13 @@ export default function Category({ section }) {
         </div>
       ) : (
         <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-          {items.map((it) => (
-            <ProductCard key={it._id} item={it} type={config.type} />
-          ))}
+          {items.map((it) =>
+            config.type === "service" ? (
+              <ServiceCard key={it._id} item={it} />
+            ) : (
+              <ProductCard key={it._id} item={it} />
+            )
+          )}
         </div>
       )}
     </section>

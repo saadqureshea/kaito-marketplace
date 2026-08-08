@@ -92,6 +92,9 @@ function productCatalog(novaId, auroraId) {
       price: 19,
       images: [pic("kaito-notion-1"), pic("kaito-notion-2")],
       status: "approved",
+      rating: 4.8,
+      numReviews: 64,
+      totalSold: 210,
     },
     {
       seller: novaId,
@@ -108,6 +111,9 @@ function productCatalog(novaId, auroraId) {
         customizationOptions: ["Size", "Thread Color"],
       },
       status: "approved",
+      rating: 4.9,
+      numReviews: 38,
+      totalSold: 72,
     },
     {
       seller: novaId,
@@ -119,6 +125,9 @@ function productCatalog(novaId, auroraId) {
       price: 12,
       images: [pic("kaito-icons-1")],
       status: "approved",
+      rating: 4.6,
+      numReviews: 21,
+      totalSold: 44,
     },
     {
       seller: novaId,
@@ -130,6 +139,9 @@ function productCatalog(novaId, auroraId) {
       price: 39,
       images: [pic("kaito-admin-kit-1"), pic("kaito-admin-kit-2")],
       status: "approved",
+      rating: 4.9,
+      numReviews: 112,
+      totalSold: 389,
     },
     {
       seller: auroraId,
@@ -146,6 +158,9 @@ function productCatalog(novaId, auroraId) {
         customizationOptions: ["Glaze Color"],
       },
       status: "approved",
+      rating: 4.7,
+      numReviews: 29,
+      totalSold: 53,
     },
     {
       seller: auroraId,
@@ -157,6 +172,9 @@ function productCatalog(novaId, auroraId) {
       price: 9,
       images: [pic("kaito-ebook-1")],
       status: "approved",
+      rating: 4.4,
+      numReviews: 17,
+      totalSold: 31,
     },
   ];
 }
@@ -167,10 +185,27 @@ async function seedProducts(catalog) {
     if (!existing) {
       await Product.create(item);
       console.log(`Created product: ${item.title}`);
-    } else if (existing.images.length === 0 && item.images?.length) {
+      continue;
+    }
+    // Backfill demo fields that were added to this script after an earlier
+    // run, without clobbering anything a real user has since changed.
+    const patches = [];
+    if (existing.images.length === 0 && item.images?.length) {
       existing.images = item.images;
+      patches.push("images");
+    }
+    if (!existing.numReviews && item.numReviews) {
+      existing.rating = item.rating;
+      existing.numReviews = item.numReviews;
+      patches.push("ratings");
+    }
+    if (!existing.totalSold && item.totalSold) {
+      existing.totalSold = item.totalSold;
+      patches.push("sales");
+    }
+    if (patches.length) {
       await existing.save();
-      console.log(`Added images to existing product: ${item.title}`);
+      console.log(`Backfilled ${patches.join(" + ")} on: ${item.title}`);
     }
   }
 }
@@ -185,6 +220,9 @@ function serviceCatalog(novaId, auroraId) {
       tags: ["react", "node", "fullstack"],
       images: [pic("kaito-webdev-1"), pic("kaito-webdev-2")],
       status: "approved",
+      rating: 4.9,
+      numReviews: 47,
+      totalOrders: 68,
       packages: [
         { name: "basic", title: "Landing page", description: "Single responsive page.", price: 299, deliveryDays: 7, revisions: 2 },
         { name: "standard", title: "Multi-page app", description: "Up to 5 pages with a database.", price: 599, deliveryDays: 14, revisions: 4 },
@@ -199,6 +237,9 @@ function serviceCatalog(novaId, auroraId) {
       tags: ["branding", "ui", "ux"],
       images: [pic("kaito-uiux-1")],
       status: "approved",
+      rating: 4.8,
+      numReviews: 33,
+      totalOrders: 41,
       packages: [
         { name: "basic", title: "Logo + palette", description: "Logo and color palette only.", price: 149, deliveryDays: 5, revisions: 2 },
         { name: "standard", title: "Brand kit", description: "Logo, palette, and style guide.", price: 349, deliveryDays: 10, revisions: 3 },
@@ -213,6 +254,9 @@ function serviceCatalog(novaId, auroraId) {
       tags: ["video", "reels", "editing"],
       images: [pic("kaito-video-1")],
       status: "approved",
+      rating: 4.7,
+      numReviews: 58,
+      totalOrders: 96,
       packages: [
         { name: "basic", title: "1 video (under 60s)", description: "Single short-form edit.", price: 45, deliveryDays: 2, revisions: 1 },
         { name: "standard", title: "5 videos", description: "Batch of 5 short-form edits.", price: 199, deliveryDays: 5, revisions: 2 },
@@ -228,10 +272,25 @@ async function seedServices(catalog) {
     if (!existing) {
       await Service.create(item);
       console.log(`Created service: ${item.title}`);
-    } else if (existing.images.length === 0 && item.images?.length) {
+      continue;
+    }
+    const patches = [];
+    if (existing.images.length === 0 && item.images?.length) {
       existing.images = item.images;
+      patches.push("images");
+    }
+    if (!existing.numReviews && item.numReviews) {
+      existing.rating = item.rating;
+      existing.numReviews = item.numReviews;
+      patches.push("ratings");
+    }
+    if (!existing.totalOrders && item.totalOrders) {
+      existing.totalOrders = item.totalOrders;
+      patches.push("orders");
+    }
+    if (patches.length) {
       await existing.save();
-      console.log(`Added images to existing service: ${item.title}`);
+      console.log(`Backfilled ${patches.join(" + ")} on: ${item.title}`);
     }
   }
 }

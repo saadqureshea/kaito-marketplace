@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import api from "../api/axios.js";
 import ProductCard from "../components/ProductCard.jsx";
+import ServiceCard from "../components/ServiceCard.jsx";
 import JobCard from "../components/JobCard.jsx";
 
 export default function Search() {
@@ -55,7 +56,7 @@ export default function Search() {
               <h2 className="mb-4 font-display text-lg font-semibold">Services</h2>
               <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
                 {results.services.map((s) => (
-                  <ProductCard key={s._id} item={s} type="service" />
+                  <ServiceCard key={s._id} item={s} />
                 ))}
               </div>
             </div>

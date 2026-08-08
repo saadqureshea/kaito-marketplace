@@ -126,13 +126,28 @@ out inline.
    commission math and role-guard middleware called out above as
    highest-risk.
 
-**Still open**: the marketplace has no seed data (`npm run seed` is wired
-up in `package.json` but `backend/utils/seed.js` doesn't exist yet), so a
-fresh install has nothing to browse until a seller/employer creates
-listings through the new forms. Worker↔employer messaging
-(`POST /api/jobs/applications/:appId/messages`) also has a working route
-but no dedicated UI yet — only status updates are wired into the Employer
-Dashboard's applicant panel.
+**Update**: `backend/utils/seed.js` now exists and works — `npm run seed`
+populates demo accounts and a full catalog (with placeholder images), so a
+fresh install no longer has to start blank. Worker↔employer messaging also
+has a dedicated UI now (`components/MessageThread.jsx`), used in both the
+Employer and Worker dashboards, not just backend status updates.
+
+**Still open** before a production launch:
+- **File storage**: uploads go to local disk via `multer`. Render/Railway's
+  free tiers don't persist disk across deploys, so this needs to move to
+  S3 or Cloudinary before deploying.
+- **PayPal Sandbox credentials**: still placeholders in `.env`. Seller
+  payout release fails gracefully (`Order.payoutError` is set, dashboard
+  shows "Payout failed") until real sandbox app credentials are added.
+- **No Stripe webhook**: order confirmation only happens client-side, when
+  the buyer's browser calls `/api/payments/confirm-session` after the
+  Stripe redirect. A buyer who closes the tab mid-checkout leaves that
+  order stuck at `pending` with no server-side reconciliation job to catch
+  it.
+- **Not deployed yet**: the repo is pushed to GitHub (single commit so
+  far) but none of the deployment steps in section 5 below have been run
+  against Render/Railway or Netlify — `CLIENT_URL` and `VITE_API_URL` are
+  still pointed at localhost.
 
 ## 5. Deployment
 
