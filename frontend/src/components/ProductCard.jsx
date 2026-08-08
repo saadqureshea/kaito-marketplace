@@ -43,7 +43,7 @@ export default function ProductCard({ item }) {
         </div>
 
         <div className="absolute right-2.5 top-2.5">
-          <Badge tone="neutral" className="bg-white/90 backdrop-blur-sm">
+          <Badge tone="neutral" className="bg-surface/90 backdrop-blur-sm">
             {madeToOrder ? "Made-to-Order" : "Digital"}
           </Badge>
         </div>

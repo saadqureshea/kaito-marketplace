@@ -30,7 +30,7 @@ export default function Login() {
       <p className="mb-8 text-sm text-ink-700/60">Log in to your KAITO account.</p>
 
       <form onSubmit={submit} className="card flex flex-col gap-4 p-6">
-        {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>}
+        {error && <p className="rounded-lg bg-red-50 dark:bg-red-500/10 px-3 py-2 text-sm text-red-600 dark:text-red-300">{error}</p>}
         <div>
           <label className="mb-1 block text-sm font-medium">Email</label>
           <input

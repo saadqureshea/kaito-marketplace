@@ -24,7 +24,7 @@ export default function ReviewForm({ orderId, onSubmitted }) {
 
   return (
     <form onSubmit={submit} className="mt-3 flex flex-col gap-2 rounded-lg border border-line p-3">
-      {error && <p className="text-xs text-red-600">{error}</p>}
+      {error && <p className="text-xs text-red-600 dark:text-red-300">{error}</p>}
       <div className="flex gap-1">
         {[1, 2, 3, 4, 5].map((n) => (
           <button type="button" key={n} onClick={() => setRating(n)}>

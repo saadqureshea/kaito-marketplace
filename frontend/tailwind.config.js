@@ -1,36 +1,51 @@
 /** @type {import('tailwindcss').Config} */
+
+// Colours resolve through CSS variables (see index.css) so light/dark swap
+// by re-declaring the variables rather than by adding a dark: variant to
+// every utility. The rgb(... / <alpha-value>) form is what keeps existing
+// opacity modifiers like `text-ink-700/60` working.
+const token = (name) => `rgb(var(--c-${name}) / <alpha-value>)`;
+
 export default {
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
       colors: {
+        // Semantic surfaces
+        canvas: token("canvas"), // page background
+        surface: token("surface"), // cards, navbar, inputs
+
         // KAITO design tokens - "signal indigo" identity, not the generic
         // cream/terracotta AI-default palette.
         ink: {
-          950: "#0E1024",
-          900: "#12142B",
-          700: "#2A2D52",
+          950: token("ink-950"), // strongest text
+          900: token("ink-900"),
+          700: token("ink-700"), // muted text, often used at /50-/70
         },
         paper: {
-          50: "#FAFBFC",
-          100: "#F2F4F8",
+          50: token("paper-50"),
+          100: token("paper-100"),
         },
         signal: {
-          500: "#3B4CCA", // primary indigo - CTAs, links, active states
-          600: "#2E3BA3",
-          400: "#5C6BDB",
+          400: token("signal-400"),
+          500: token("signal-500"), // primary indigo - CTAs, links, active states
+          600: token("signal-600"), // hover (darker in light, lighter in dark)
         },
         kaito: {
-          gold: "#E3A857", // accent - used sparingly (badges, highlights)
+          gold: token("gold"), // accent - used sparingly (badges, highlights)
         },
-        line: "#E2E5ED",
+        line: token("line"),
+
+        // Always-dark backdrop for the hero, which stays dark in both themes
+        night: "#0B0D18",
       },
       fontFamily: {
         display: ["Space Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
         body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        card: "0 1px 2px rgba(14,16,36,0.06), 0 8px 24px -12px rgba(14,16,36,0.12)",
+        card: "0 1px 2px rgb(var(--c-shadow) / 0.06), 0 8px 24px -12px rgb(var(--c-shadow) / 0.12)",
       },
       borderRadius: {
         xl2: "1.25rem",

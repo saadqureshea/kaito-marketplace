@@ -2,7 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Palette lives here as space-separated RGB channels so Tailwind can apply
+   opacity modifiers to it. Dark mode re-declares the same names, which is
+   why components don't need dark: variants for ordinary text/surfaces.
+
+   Note the semantics invert: "ink" is always *foreground* and "paper" is
+   always *background*, so in dark mode ink resolves to a light colour. */
 @layer base {
+  :root {
+    --c-canvas: 255 255 255;
+    --c-surface: 255 255 255;
+    --c-paper-50: 250 251 252;
+    --c-paper-100: 242 244 248;
+    --c-line: 226 229 237;
+
+    --c-ink-950: 14 16 36;
+    --c-ink-900: 18 20 43;
+    --c-ink-700: 42 45 82;
+
+    --c-signal-400: 92 107 219;
+    --c-signal-500: 59 76 202;
+    --c-signal-600: 46 59 163;
+
+    --c-gold: 227 168 87;
+    --c-shadow: 14 16 36;
+
+    color-scheme: light;
+  }
+
+  .dark {
+    --c-canvas: 10 12 22;
+    --c-surface: 20 23 42;
+    --c-paper-50: 15 17 32;
+    --c-paper-100: 28 31 51;
+    --c-line: 42 46 69;
+
+    --c-ink-950: 244 245 250;
+    --c-ink-900: 226 229 240;
+    --c-ink-700: 190 195 216;
+
+    /* Brand lightens on dark so it keeps contrast against the surface, and
+       the 500/600 hover relationship flips direction. */
+    --c-signal-400: 154 165 245;
+    --c-signal-500: 122 136 240;
+    --c-signal-600: 160 172 248;
+
+    --c-gold: 233 188 121;
+    --c-shadow: 0 0 0;
+
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-canvas font-body text-ink-900;
+  }
+
+  /* Applied for one frame while the theme swaps. Elements carrying Tailwind's
+     `transition` utility otherwise keep their previously-computed colour when
+     the underlying custom property changes, leaving cards stuck on the old
+     palette until a reload. Suppressing transitions also stops the whole page
+     from cross-fading on every toggle. */
+  .theme-switching *,
+  .theme-switching *::before,
+  .theme-switching *::after {
+    transition: none !important;
+  }
+
   h1, h2, h3, h4 {
     @apply font-display text-ink-950;
   }
@@ -10,15 +75,27 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-signal-500 px-5 py-2.5 text-sm font-semibold text-white shadow-card transition hover:bg-signal-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-500;
+    @apply inline-flex items-center justify-center rounded-full bg-signal-500 px-5 py-2.5 text-sm font-semibold text-white shadow-card transition hover:bg-signal-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-500 disabled:cursor-not-allowed disabled:opacity-60;
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-full border border-line bg-white px-5 py-2.5 text-sm font-semibold text-ink-900 transition hover:border-signal-500 hover:text-signal-500;
+    @apply inline-flex items-center justify-center rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-semibold text-ink-900 transition hover:border-signal-500 hover:text-signal-500 disabled:cursor-not-allowed disabled:opacity-60;
   }
   .card {
-    @apply rounded-xl2 border border-line bg-white shadow-card;
+    @apply rounded-xl2 border border-line bg-surface shadow-card;
   }
   .input {
-    @apply w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-700/40 focus:border-signal-500 focus:outline-none focus:ring-1 focus:ring-signal-500;
+    @apply w-full rounded-lg border border-line bg-surface px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-700/40 focus:border-signal-500 focus:outline-none focus:ring-1 focus:ring-signal-500;
+  }
+
+  /* Status pills - shared by listing/order/application states so the
+     light+dark pairs are defined once instead of at ~50 call sites. */
+  .status-ok {
+    @apply bg-green-50 text-green-700 dark:bg-green-500/10 dark:text-green-300;
+  }
+  .status-warn {
+    @apply bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300;
+  }
+  .status-bad {
+    @apply bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-300;
   }
 }

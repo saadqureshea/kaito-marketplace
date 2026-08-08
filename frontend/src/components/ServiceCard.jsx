@@ -39,7 +39,7 @@ export default function ServiceCard({ item }) {
         )}
         {tiers.length > 1 && (
           <div className="absolute right-2.5 top-2.5">
-            <Badge tone="neutral" className="bg-white/90 backdrop-blur-sm">
+            <Badge tone="neutral" className="bg-surface/90 backdrop-blur-sm">
               <Layers className="mr-1 h-2.5 w-2.5" /> {tiers.length} tiers
             </Badge>
           </div>

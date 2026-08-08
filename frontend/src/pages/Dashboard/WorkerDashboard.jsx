@@ -27,7 +27,7 @@ export default function WorkerDashboard() {
       <div className="mb-8 card p-6">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-display text-lg font-semibold">Professional Profile</h2>
-          <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-700">
+          <span className="rounded-full bg-amber-50 dark:bg-amber-500/10 px-2.5 py-0.5 text-xs font-medium text-amber-700 dark:text-amber-300">
             {user?.professionalProfile?.approvalStatus?.replace("_", " ")}
           </span>
         </div>

@@ -212,8 +212,8 @@ export default function SellerDashboard() {
           </div>
         </div>
 
-        {error && <p className="mb-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>}
-        {success && <p className="mb-3 rounded-lg bg-green-50 px-3 py-2 text-sm text-green-700">{success}</p>}
+        {error && <p className="mb-3 rounded-lg bg-red-50 dark:bg-red-500/10 px-3 py-2 text-sm text-red-600 dark:text-red-300">{error}</p>}
+        {success && <p className="mb-3 rounded-lg bg-green-50 dark:bg-green-500/10 px-3 py-2 text-sm text-green-700 dark:text-green-300">{success}</p>}
 
         {listingKind === "product" ? (
           <form onSubmit={submitProduct} className="flex flex-col gap-3">
@@ -460,20 +460,20 @@ export default function SellerDashboard() {
 
 function PayoutBadge({ order }) {
   if (order.payoutReleased) {
-    return <span className="rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-700">Paid out</span>;
+    return <span className="rounded-full bg-green-50 dark:bg-green-500/10 px-2.5 py-0.5 text-xs font-medium text-green-700 dark:text-green-300">Paid out</span>;
   }
   if (order.payoutError) {
     return (
       <span
         title={order.payoutError}
-        className="rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-600"
+        className="rounded-full bg-red-50 dark:bg-red-500/10 px-2.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-300"
       >
         Payout failed
       </span>
     );
   }
   return (
-    <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-700">
+    <span className="rounded-full bg-amber-50 dark:bg-amber-500/10 px-2.5 py-0.5 text-xs font-medium text-amber-700 dark:text-amber-300">
       {order.orderStatus === "completed" ? "Payout pending" : "Awaiting completion"}
     </span>
   );
@@ -486,10 +486,10 @@ function ListingRow({ item }) {
       <span
         className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
           item.status === "approved"
-            ? "bg-green-50 text-green-700"
+            ? "bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-300"
             : item.status === "rejected"
-            ? "bg-red-50 text-red-600"
-            : "bg-amber-50 text-amber-700"
+            ? "bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-300"
+            : "bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300"
         }`}
       >
         {item.status.replace("_", " ")}

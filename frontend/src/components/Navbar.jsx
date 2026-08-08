@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Search, Menu, X, User } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
+import ThemeToggle from "./ThemeToggle.jsx";
 
 const dashboardPathFor = (role) =>
   ({
@@ -24,7 +25,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-white">
+    <header className="sticky top-0 z-40 border-b border-line bg-surface">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
@@ -62,6 +63,8 @@ export default function Navbar() {
             Remote Work
           </Link>
 
+          <ThemeToggle />
+
           {user ? (
             <div className="flex items-center gap-3">
               <Link to={dashboardPathFor(user.role)} className="btn-secondary !px-4 !py-2">
@@ -83,15 +86,18 @@ export default function Navbar() {
           )}
         </nav>
 
-        {/* Mobile toggle */}
-        <button className="ml-auto md:hidden" onClick={() => setOpen((v) => !v)} aria-label="Toggle menu">
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        {/* Mobile toggles */}
+        <div className="ml-auto flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button onClick={() => setOpen((v) => !v)} aria-label="Toggle menu">
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <div className="border-t border-line bg-white px-4 pb-4 pt-3 md:hidden">
+        <div className="border-t border-line bg-surface px-4 pb-4 pt-3 md:hidden">
           <form onSubmit={submitSearch} className="relative mb-3">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-700/40" />
             <input

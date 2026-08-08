@@ -45,7 +45,7 @@ export default function CheckoutSuccess() {
 
         {status === "paid" && (
           <div>
-            <p className="rounded-lg bg-green-50 px-4 py-3 text-sm text-green-700">
+            <p className="rounded-lg bg-green-50 dark:bg-green-500/10 px-4 py-3 text-sm text-green-700 dark:text-green-300">
               Payment successful! Redirecting to your orders...
             </p>
             {order && (
@@ -59,7 +59,7 @@ export default function CheckoutSuccess() {
 
         {status === "error" && (
           <div>
-            <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>
+            <p className="rounded-lg bg-red-50 dark:bg-red-500/10 px-3 py-2 text-sm text-red-600 dark:text-red-300">{error}</p>
             <Link to="/dashboard/buyer" className="mt-4 inline-block text-sm text-signal-500 hover:underline">
               Go to your orders
             </Link>

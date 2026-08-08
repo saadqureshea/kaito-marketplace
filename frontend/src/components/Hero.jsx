@@ -17,8 +17,10 @@ export default function Hero() {
     navigate(`/search?q=${encodeURIComponent(q)}`);
   };
 
+  // bg-night rather than bg-ink-950: "ink" is a foreground token and inverts
+  // under dark mode, but the hero is meant to stay dark in both themes.
   return (
-    <section className="relative overflow-hidden bg-ink-950">
+    <section className="relative overflow-hidden bg-night">
       {/* subtle signature grid, evokes a manifest / shipping-ledger feel that
           ties the four marketplace sections (goods + services + work) together */}
       <div
@@ -48,7 +50,7 @@ export default function Hero() {
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Try 'logo design', 'React developer', 'custom hoodie'..."
-              className="w-full rounded-full border-0 bg-white py-3.5 pl-12 pr-4 text-sm text-ink-900 shadow-card focus:outline-none focus:ring-2 focus:ring-signal-400"
+              className="w-full rounded-full border-0 bg-surface py-3.5 pl-12 pr-4 text-sm text-ink-900 shadow-card focus:outline-none focus:ring-2 focus:ring-signal-400"
             />
           </div>
           <button type="submit" className="btn-primary !px-6">

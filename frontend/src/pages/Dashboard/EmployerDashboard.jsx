@@ -82,8 +82,8 @@ export default function EmployerDashboard() {
 
       <div className="mb-10 card p-6">
         <h2 className="mb-4 font-display text-lg font-semibold">Post a job</h2>
-        {error && <p className="mb-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>}
-        {success && <p className="mb-3 rounded-lg bg-green-50 px-3 py-2 text-sm text-green-700">{success}</p>}
+        {error && <p className="mb-3 rounded-lg bg-red-50 dark:bg-red-500/10 px-3 py-2 text-sm text-red-600 dark:text-red-300">{error}</p>}
+        {success && <p className="mb-3 rounded-lg bg-green-50 dark:bg-green-500/10 px-3 py-2 text-sm text-green-700 dark:text-green-300">{success}</p>}
 
         <form onSubmit={submitJob} className="flex flex-col gap-3">
           <input
@@ -188,10 +188,10 @@ export default function EmployerDashboard() {
                 <span
                   className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
                     j.status === "open"
-                      ? "bg-green-50 text-green-700"
+                      ? "bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-300"
                       : j.status === "rejected"
-                      ? "bg-red-50 text-red-600"
-                      : "bg-amber-50 text-amber-700"
+                      ? "bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-300"
+                      : "bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300"
                   }`}
                 >
                   {j.status.replace("_", " ")}

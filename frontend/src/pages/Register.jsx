@@ -42,7 +42,7 @@ export default function Register() {
       <p className="mb-8 text-sm text-ink-700/60">Free to join. Sellers and workers keep 80% of every sale.</p>
 
       <form onSubmit={submit} className="card flex flex-col gap-4 p-6">
-        {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>}
+        {error && <p className="rounded-lg bg-red-50 dark:bg-red-500/10 px-3 py-2 text-sm text-red-600 dark:text-red-300">{error}</p>}
 
         <div>
           <label className="mb-1 block text-sm font-medium">I want to join as</label>

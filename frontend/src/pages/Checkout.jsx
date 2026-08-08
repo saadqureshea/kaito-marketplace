@@ -43,7 +43,7 @@ export default function Checkout() {
       <p className="mb-8 text-sm text-ink-700/60">Secure payment via Stripe (test mode).</p>
 
       <div className="card p-6">
-        {error && <p className="mb-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>}
+        {error && <p className="mb-4 rounded-lg bg-red-50 dark:bg-red-500/10 px-3 py-2 text-sm text-red-600 dark:text-red-300">{error}</p>}
 
         <button onClick={startCheckout} disabled={status === "processing"} className="btn-primary w-full">
           {status === "processing" ? "Redirecting to Stripe..." : "Pay with card"}

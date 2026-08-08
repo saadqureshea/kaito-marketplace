@@ -26,7 +26,7 @@ export default function MessageThread({ applicationId, initialMessages = [] }) {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="max-h-48 space-y-2 overflow-y-auto rounded-lg border border-line bg-white p-3">
+      <div className="max-h-48 space-y-2 overflow-y-auto rounded-lg border border-line bg-surface p-3">
         {messages.length === 0 ? (
           <p className="text-xs text-ink-700/50">No messages yet.</p>
         ) : (

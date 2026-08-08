@@ -54,7 +54,7 @@ export default function FileUpload({ value = [], onChange, multiple = true, acce
         )}
         {uploading ? "Uploading..." : label}
       </label>
-      {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
+      {error && <p className="mt-1 text-xs text-red-600 dark:text-red-300">{error}</p>}
       {value.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-2">
           {value.map((url, i) => (
