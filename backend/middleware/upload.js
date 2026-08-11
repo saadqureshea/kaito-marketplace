@@ -1,13 +1,4 @@
-import path from "path";
-import fs from "fs";
-import { fileURLToPath } from "url";
 import multer from "multer";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-export const UPLOAD_DIR = path.resolve(__dirname, "..", "uploads");
-
-if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 
 const ALLOWED_MIME = new Set([
   "image/jpeg",
@@ -20,25 +11,22 @@ const ALLOWED_MIME = new Set([
   "application/epub+zip",
 ]);
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, UPLOAD_DIR),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase();
-    const unique = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
-    cb(null, unique);
-  },
-});
-
 function fileFilter(req, file, cb) {
   if (!ALLOWED_MIME.has(file.mimetype)) {
-    cb(new Error("Unsupported file type. Allowed: JPG, PNG, WEBP, GIF, PDF"));
+    cb(new Error("Unsupported file type. Allowed: JPG, PNG, WEBP, GIF, PDF, ZIP, EPUB"));
     return;
   }
   cb(null, true);
 }
 
+// Files are buffered in memory and then streamed into GridFS (see
+// utils/gridfs.js). Local disk isn't an option: the host's filesystem is
+// ephemeral, so anything written there is lost on the next deploy - which
+// previously left employers with dead "View CV" links.
 export const upload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   fileFilter,
   limits: { fileSize: 5 * 1024 * 1024, files: 6 },
 });
+
+export { ALLOWED_MIME };

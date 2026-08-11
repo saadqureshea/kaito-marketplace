@@ -23,22 +23,20 @@ import adminRoutes from "./routes/adminRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
-import { UPLOAD_DIR } from "./middleware/upload.js";
 
 dotenv.config();
 connectDB();
 
 const app = express();
 
-// crossOriginResourcePolicy relaxed so the frontend (different origin/port)
-// can load images served from /uploads
+// crossOriginResourcePolicy relaxed so the frontend (different origin) can
+// load images streamed from /api/uploads
 app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan(process.env.NODE_ENV === "development" ? "dev" : "combined"));
-app.use("/uploads", express.static(UPLOAD_DIR));
 
 // Global rate limiter (auth routes get a stricter one inside authRoutes)
 const apiLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 300 });
