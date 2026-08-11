@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ImageOff, ShoppingBag } from "lucide-react";
 import Badge from "./Badge.jsx";
 import Rating from "./Rating.jsx";
+import AddToCartButton from "./AddToCartButton.jsx";
 import { assetUrl } from "../utils/url.js";
 import { isNew, money, compact } from "../utils/format.js";
 
@@ -72,15 +73,27 @@ export default function ProductCard({ item }) {
           )}
         </div>
 
-        <div className="mt-auto flex items-end justify-between pt-3">
-          <span className="font-display text-lg font-semibold text-ink-950">
-            {money(item.price, item.currency)}
-          </span>
-          {madeToOrder && item.productionDetails?.leadTimeDays && (
-            <span className="text-[11px] text-ink-700/75">
-              ~{item.productionDetails.leadTimeDays}d to make
+        <div className="mt-auto flex items-end justify-between gap-2 pt-3">
+          <div className="min-w-0">
+            <span className="block font-display text-lg font-semibold text-ink-950">
+              {money(item.price, item.currency)}
             </span>
-          )}
+            {madeToOrder && item.productionDetails?.leadTimeDays && (
+              <span className="text-[11px] text-ink-700/75">
+                ~{item.productionDetails.leadTimeDays}d to make
+              </span>
+            )}
+          </div>
+          <AddToCartButton
+            item={{
+              itemType: "product",
+              itemId: item._id,
+              title: item.title,
+              price: item.price,
+              image: item.images?.[0],
+              sellerName: storeName,
+            }}
+          />
         </div>
       </div>
     </Link>

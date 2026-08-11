@@ -2,20 +2,21 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import Service from "../models/Service.js";
 import { protect, requireRole } from "../middleware/auth.js";
+import { serviceSort } from "../utils/sorting.js";
 
 const router = express.Router();
 
 router.get(
   "/",
   asyncHandler(async (req, res) => {
-    const { keyword, category, page = 1, limit = 12 } = req.query;
+    const { keyword, category, sort, page = 1, limit = 12 } = req.query;
     const query = { status: "approved" };
     if (keyword) query.$text = { $search: keyword };
     if (category) query.category = category;
 
     const skip = (Number(page) - 1) * Number(limit);
     const [items, total] = await Promise.all([
-      Service.find(query).populate("seller", "name sellerProfile").sort("-createdAt").skip(skip).limit(Number(limit)),
+      Service.find(query).populate("seller", "name sellerProfile").sort(serviceSort(sort)).skip(skip).limit(Number(limit)),
       Service.countDocuments(query),
     ]);
     res.json({ items, total, page: Number(page), pages: Math.ceil(total / limit) });

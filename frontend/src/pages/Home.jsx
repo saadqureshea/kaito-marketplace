@@ -78,8 +78,10 @@ export default function Home() {
           </EmptyState>
         ) : (
           <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-            {gridProducts.map((p) => (
-              <ProductCard key={p._id} item={p} />
+            {gridProducts.map((p, i) => (
+              <div key={p._id} className="rise" style={{ "--i": i }}>
+                <ProductCard item={p} />
+              </div>
             ))}
           </div>
         )}
@@ -100,8 +102,10 @@ export default function Home() {
             <EmptyState>No services listed yet.</EmptyState>
           ) : (
             <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-              {services.map((s) => (
-                <ServiceCard key={s._id} item={s} />
+              {services.map((s, i) => (
+                <div key={s._id} className="rise" style={{ "--i": i }}>
+                  <ServiceCard item={s} />
+                </div>
               ))}
             </div>
           )}
@@ -127,8 +131,10 @@ export default function Home() {
           <EmptyState>No open roles right now — check back soon.</EmptyState>
         ) : (
           <div className="flex flex-col gap-3">
-            {jobs.map((j) => (
-              <JobCard key={j._id} job={j} />
+            {jobs.map((j, i) => (
+              <div key={j._id} className="rise" style={{ "--i": i }}>
+                <JobCard job={j} />
+              </div>
             ))}
           </div>
         )}

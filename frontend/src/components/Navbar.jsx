@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Search, Menu, X, User } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
+import CartBadge from "./CartBadge.jsx";
 
 const dashboardPathFor = (role) =>
   ({
@@ -64,6 +65,7 @@ export default function Navbar() {
           </Link>
 
           <ThemeToggle />
+          <CartBadge />
 
           {user ? (
             <div className="flex items-center gap-3">
@@ -89,6 +91,7 @@ export default function Navbar() {
         {/* Mobile toggles */}
         <div className="ml-auto flex items-center gap-2 md:hidden">
           <ThemeToggle />
+          <CartBadge />
           <button onClick={() => setOpen((v) => !v)} aria-label="Toggle menu">
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>

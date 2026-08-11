@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ImageOff, Clock, Layers } from "lucide-react";
 import Badge from "./Badge.jsx";
 import Rating from "./Rating.jsx";
+import AddToCartButton from "./AddToCartButton.jsx";
 import { assetUrl } from "../utils/url.js";
 import { money, compact, titleize } from "../utils/format.js";
 
@@ -79,18 +80,31 @@ export default function ServiceCard({ item }) {
           </div>
         )}
 
-        <div className="mt-auto flex items-end justify-between pt-3">
-          <div>
+        <div className="mt-auto flex items-end justify-between gap-2 pt-3">
+          <div className="min-w-0">
             <p className="text-[10px] uppercase tracking-wide text-ink-700/70">Starting at</p>
             <span className="font-display text-lg font-semibold text-ink-950">
               {money(entry?.price)}
             </span>
+            {entry?.deliveryDays && (
+              <span className="mt-0.5 inline-flex items-center gap-1 text-[11px] text-ink-700/75">
+                <Clock className="h-3 w-3" />
+                {entry.deliveryDays}d delivery
+              </span>
+            )}
           </div>
-          {entry?.deliveryDays && (
-            <span className="inline-flex items-center gap-1 text-[11px] text-ink-700/75">
-              <Clock className="h-3 w-3" />
-              {entry.deliveryDays}d delivery
-            </span>
+          {entry && (
+            <AddToCartButton
+              item={{
+                itemType: "service",
+                itemId: item._id,
+                servicePackage: entry.name,
+                title: `${item.title} (${entry.name})`,
+                price: entry.price,
+                image: item.images?.[0],
+                sellerName: storeName,
+              }}
+            />
           )}
         </div>
       </div>

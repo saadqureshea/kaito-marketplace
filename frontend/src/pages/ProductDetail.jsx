@@ -5,6 +5,7 @@ import api from "../api/axios.js";
 import { assetUrl } from "../utils/url.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import ReviewList from "../components/ReviewList.jsx";
+import AddToCartButton from "../components/AddToCartButton.jsx";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -83,9 +84,22 @@ export default function ProductDetail() {
             ${product.price?.toFixed(2)} <span className="text-sm font-normal text-ink-700/75">{product.currency}</span>
           </p>
 
-          <button onClick={buyNow} className="btn-primary mt-6 w-full sm:w-auto">
-            Buy now
-          </button>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <button onClick={buyNow} className="press btn-primary">
+              Buy now
+            </button>
+            <AddToCartButton
+              variant="full"
+              item={{
+                itemType: "product",
+                itemId: product._id,
+                title: product.title,
+                price: product.price,
+                image: product.images?.[0],
+                sellerName: product.seller?.sellerProfile?.storeName || product.seller?.name,
+              }}
+            />
+          </div>
 
           {product.listingType === "made_to_order" && product.productionDetails?.leadTimeDays && (
             <p className="mt-4 text-sm text-ink-700/75">

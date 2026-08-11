@@ -103,6 +103,50 @@
       linear-gradient(180deg, rgb(var(--c-paper-50)) 0%, rgb(var(--c-canvas)) 100%);
   }
 
+  /* --- Motion -------------------------------------------------------
+     Kept in CSS rather than an animation library: everything here is a
+     transform/opacity tween, so it costs nothing in bundle size and stays
+     off the main thread. The whole block is disabled under
+     prefers-reduced-motion at the bottom of this file. */
+
+  /* Tactile feedback on anything you click. */
+  .press {
+    @apply transition-transform duration-100;
+  }
+  .press:active {
+    @apply scale-[0.97];
+  }
+
+  /* Cart count acknowledging an add. */
+  @keyframes bump {
+    0% { transform: scale(1); }
+    35% { transform: scale(1.45); }
+    100% { transform: scale(1); }
+  }
+  .animate-bump {
+    animation: bump 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Grid/list entrance. Children opt in via --i for a stagger; the delay is
+     capped so a long list never leaves the last card visibly waiting. */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+  .rise {
+    animation: rise 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i, 0) * 45ms);
+  }
+
+  /* Route-level fade so page changes don't snap. */
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .page-enter {
+    animation: fade-in 0.25s ease-out both;
+  }
+
   /* Swipeable rails shouldn't show a scrollbar over the cards. */
   .no-scrollbar {
     scrollbar-width: none;
@@ -121,5 +165,23 @@
   }
   .status-bad {
     @apply bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-300;
+  }
+}
+
+/* Honour the OS setting. Content still has to end up in its final state, so
+   animations are collapsed to an instant rather than removed - dropping
+   `rise` entirely would leave cards stuck at opacity 0. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .press:active {
+    transform: none;
   }
 }

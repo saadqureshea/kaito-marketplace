@@ -5,6 +5,7 @@ import api from "../api/axios.js";
 import { assetUrl } from "../utils/url.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import ReviewList from "../components/ReviewList.jsx";
+import AddToCartButton from "../components/AddToCartButton.jsx";
 
 export default function ServiceDetail() {
   const { id } = useParams();
@@ -102,9 +103,22 @@ export default function ServiceDetail() {
               </li>
             </ul>
 
-            <button onClick={buyNow} className="btn-primary mt-6 w-full">
+            <button onClick={buyNow} className="press btn-primary mt-6 w-full">
               Continue (${pkg.price.toFixed(2)})
             </button>
+            <AddToCartButton
+              variant="full"
+              className="mt-2 w-full"
+              item={{
+                itemType: "service",
+                itemId: service._id,
+                servicePackage: pkg.name,
+                title: `${service.title} (${pkg.name})`,
+                price: pkg.price,
+                image: service.images?.[0],
+                sellerName: service.seller?.sellerProfile?.storeName || service.seller?.name,
+              }}
+            />
           </div>
         </div>
       </div>

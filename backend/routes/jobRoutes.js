@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler";
 import Job from "../models/Job.js";
 import Application from "../models/Application.js";
 import { protect, requireRole } from "../middleware/auth.js";
+import { jobSort } from "../utils/sorting.js";
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ const router = express.Router();
 router.get(
   "/",
   asyncHandler(async (req, res) => {
-    const { keyword, category, employmentType, page = 1, limit = 12 } = req.query;
+    const { keyword, category, employmentType, sort, page = 1, limit = 12 } = req.query;
     const query = { status: "open" };
     if (keyword) query.$text = { $search: keyword };
     if (category) query.category = category;
@@ -19,7 +20,7 @@ router.get(
 
     const skip = (Number(page) - 1) * Number(limit);
     const [items, total] = await Promise.all([
-      Job.find(query).populate("employer", "name sellerProfile.storeName").sort("-createdAt").skip(skip).limit(Number(limit)),
+      Job.find(query).populate("employer", "name sellerProfile.storeName").sort(jobSort(sort)).skip(skip).limit(Number(limit)),
       Job.countDocuments(query),
     ]);
     res.json({ items, total, page: Number(page), pages: Math.ceil(total / limit) });

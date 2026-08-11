@@ -2,6 +2,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import Product from "../models/Product.js";
 import { protect, requireRole } from "../middleware/auth.js";
+import { productSort } from "../utils/sorting.js";
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ const router = express.Router();
 router.get(
   "/",
   asyncHandler(async (req, res) => {
-    const { keyword, category, listingType, minPrice, maxPrice, page = 1, limit = 12 } = req.query;
+    const { keyword, category, listingType, minPrice, maxPrice, sort, page = 1, limit = 12 } = req.query;
 
     const query = { status: "approved" };
     if (keyword) query.$text = { $search: keyword };
@@ -26,7 +27,7 @@ router.get(
     const [items, total] = await Promise.all([
       Product.find(query)
         .populate("seller", "name sellerProfile.storeName sellerProfile.rating")
-        .sort("-createdAt")
+        .sort(productSort(sort))
         .skip(skip)
         .limit(Number(limit)),
       Product.countDocuments(query),
