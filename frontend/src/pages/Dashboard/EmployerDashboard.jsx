@@ -169,7 +169,7 @@ export default function EmployerDashboard() {
       <h2 className="mb-3 font-display text-lg font-semibold">Your job postings</h2>
       <div className="card divide-y divide-line">
         {jobs.length === 0 ? (
-          <p className="p-6 text-sm text-ink-700/60">No job postings yet.</p>
+          <p className="p-6 text-sm text-ink-700/75">No job postings yet.</p>
         ) : (
           jobs.map((j) => (
             <div key={j._id}>
@@ -180,7 +180,7 @@ export default function EmployerDashboard() {
                   </Link>
                   <button
                     onClick={() => toggleApplicants(j._id)}
-                    className="block text-ink-700/60 hover:text-signal-500"
+                    className="block text-ink-700/75 hover:text-signal-500"
                   >
                     {j.applicantCount} applicant(s) {expandedJob === j._id ? "▲" : "▼"}
                   </button>
@@ -201,7 +201,7 @@ export default function EmployerDashboard() {
               {expandedJob === j._id && (
                 <div className="divide-y divide-line bg-paper-50 px-4">
                   {applicants.length === 0 ? (
-                    <p className="py-4 text-xs text-ink-700/60">No applicants yet.</p>
+                    <p className="py-4 text-xs text-ink-700/75">No applicants yet.</p>
                   ) : (
                     applicants.map((a) => (
                       <div key={a._id} className="flex flex-col gap-2 py-4 text-xs">

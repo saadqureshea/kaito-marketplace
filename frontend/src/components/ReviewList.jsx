@@ -14,7 +14,7 @@ export default function ReviewList({ itemType, itemId }) {
   }, [itemType, itemId]);
 
   if (reviews.length === 0) {
-    return <p className="text-sm text-ink-700/60">No reviews yet.</p>;
+    return <p className="text-sm text-ink-700/75">No reviews yet.</p>;
   }
 
   return (
@@ -33,7 +33,7 @@ export default function ReviewList({ itemType, itemId }) {
             </span>
           </div>
           {r.comment && <p className="mt-2 text-sm text-ink-700/80">{r.comment}</p>}
-          <p className="mt-2 text-xs text-ink-700/40">{new Date(r.createdAt).toLocaleDateString()}</p>
+          <p className="mt-2 text-xs text-ink-700/70">{new Date(r.createdAt).toLocaleDateString()}</p>
         </div>
       ))}
     </div>

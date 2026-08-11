@@ -11,7 +11,7 @@ import api from "../api/axios.js";
 
 function EmptyState({ children }) {
   return (
-    <p className="rounded-xl2 border border-dashed border-line bg-paper-50 p-10 text-center text-sm text-ink-700/55">
+    <p className="rounded-xl2 border border-dashed border-line bg-paper-50 p-10 text-center text-sm text-ink-700/75">
       {children}
     </p>
   );
@@ -40,7 +40,7 @@ export default function Home() {
   const [jobs, setJobs] = useState(null);
 
   useEffect(() => {
-    api.get("/products", { params: { limit: 8 } })
+    api.get("/products", { params: { limit: 12 } })
       .then(({ data }) => setProducts(data.items))
       .catch(() => setProducts([]));
 
@@ -53,27 +53,32 @@ export default function Home() {
       .catch(() => setJobs([]));
   }, []);
 
+  // The hero features the first four; the grid below picks up from there so
+  // the same listings aren't shown twice on one screen.
+  const gridProducts = products === null ? null : products.slice(4);
+
   return (
     <>
-      <Hero />
-      <TrustBar />
+      <Hero products={products} />
       <CategoryTabs />
 
       {/* Products */}
       <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Marketplace"
-          title="Fresh on the marketplace"
-          subtitle="Newly approved digital downloads and made-to-order pieces."
+          title="More on the marketplace"
+          subtitle="Digital downloads and made-to-order pieces from approved sellers."
           to="/digital-products"
         />
-        {products === null ? (
+        {gridProducts === null ? (
           <CardGridSkeleton />
-        ) : products.length === 0 ? (
-          <EmptyState>No listings yet — approved products will appear here once sellers start publishing.</EmptyState>
+        ) : gridProducts.length === 0 ? (
+          <EmptyState>
+            No further listings yet — approved products appear here as sellers publish them.
+          </EmptyState>
         ) : (
           <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-            {products.map((p) => (
+            {gridProducts.map((p) => (
               <ProductCard key={p._id} item={p} />
             ))}
           </div>
@@ -129,6 +134,7 @@ export default function Home() {
         )}
       </section>
 
+      <TrustBar />
       <HowItWorks />
     </>
   );

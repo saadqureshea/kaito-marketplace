@@ -39,7 +39,7 @@ export default function Register() {
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16">
       <h1 className="mb-1 font-display text-2xl font-semibold">Join KAITO MarketPlace</h1>
-      <p className="mb-8 text-sm text-ink-700/60">Free to join. Sellers and workers keep 80% of every sale.</p>
+      <p className="mb-8 text-sm text-ink-700/75">Free to join. Sellers and workers keep 80% of every sale.</p>
 
       <form onSubmit={submit} className="card flex flex-col gap-4 p-6">
         {error && <p className="rounded-lg bg-red-50 dark:bg-red-500/10 px-3 py-2 text-sm text-red-600 dark:text-red-300">{error}</p>}
@@ -57,7 +57,7 @@ export default function Register() {
                 }`}
               >
                 <span className="block font-medium">{r.label}</span>
-                <span className="block text-xs text-ink-700/60">{r.desc}</span>
+                <span className="block text-xs text-ink-700/75">{r.desc}</span>
               </button>
             ))}
           </div>
@@ -87,7 +87,7 @@ export default function Register() {
         </button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-ink-700/60">
+      <p className="mt-6 text-center text-sm text-ink-700/75">
         Already have an account?{" "}
         <Link to="/login" className="font-medium text-signal-500">
           Log in

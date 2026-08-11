@@ -57,7 +57,7 @@ export default function WorkerDashboard() {
       <h2 className="mb-3 font-display text-lg font-semibold">My Applications</h2>
       <div className="card divide-y divide-line">
         {applications.length === 0 ? (
-          <p className="p-6 text-sm text-ink-700/60">No applications yet.</p>
+          <p className="p-6 text-sm text-ink-700/75">No applications yet.</p>
         ) : (
           applications.map((a) => (
             <div key={a._id}>
@@ -66,7 +66,7 @@ export default function WorkerDashboard() {
                 className="flex w-full items-center justify-between p-4 text-left text-sm"
               >
                 <span>{a.job?.title}</span>
-                <span className="text-ink-700/60">{a.status}</span>
+                <span className="text-ink-700/75">{a.status}</span>
               </button>
               {expandedApp === a._id && (
                 <div className="bg-paper-50 px-4 pb-4">

@@ -60,12 +60,12 @@ export default function ProductCard({ item }) {
           {item.title}
         </h3>
 
-        {storeName && <p className="mt-1 text-xs text-ink-700/55">by {storeName}</p>}
+        {storeName && <p className="mt-1 text-xs text-ink-700/75">by {storeName}</p>}
 
         <div className="mt-2 flex items-center gap-3">
           <Rating rating={item.rating} numReviews={item.numReviews} />
           {item.totalSold > 0 && (
-            <span className="inline-flex items-center gap-1 text-xs text-ink-700/50">
+            <span className="inline-flex items-center gap-1 text-xs text-ink-700/75">
               <ShoppingBag className="h-3 w-3" />
               {compact(item.totalSold)} sold
             </span>
@@ -77,7 +77,7 @@ export default function ProductCard({ item }) {
             {money(item.price, item.currency)}
           </span>
           {madeToOrder && item.productionDetails?.leadTimeDays && (
-            <span className="text-[11px] text-ink-700/50">
+            <span className="text-[11px] text-ink-700/75">
               ~{item.productionDetails.leadTimeDays}d to make
             </span>
           )}

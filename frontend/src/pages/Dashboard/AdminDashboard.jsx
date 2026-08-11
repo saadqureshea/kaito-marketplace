@@ -37,13 +37,13 @@ export default function AdminDashboard() {
       <h2 className="mb-3 font-display text-lg font-semibold">Pending product approvals</h2>
       <div className="card divide-y divide-line">
         {pendingProducts.length === 0 ? (
-          <p className="p-6 text-sm text-ink-700/60">Nothing pending review.</p>
+          <p className="p-6 text-sm text-ink-700/75">Nothing pending review.</p>
         ) : (
           pendingProducts.map((p) => (
             <div key={p._id} className="flex items-center justify-between p-4 text-sm">
               <div>
                 <p className="font-medium">{p.title}</p>
-                <p className="text-ink-700/60">{p.seller?.name}</p>
+                <p className="text-ink-700/75">{p.seller?.name}</p>
               </div>
               <div className="flex gap-2">
                 <button onClick={() => approve(p._id)} className="btn-primary !px-3 !py-1.5 text-xs">Approve</button>
@@ -60,7 +60,7 @@ export default function AdminDashboard() {
 function Stat({ label, value }) {
   return (
     <div className="card p-5">
-      <p className="text-xs uppercase tracking-wide text-ink-700/50">{label}</p>
+      <p className="text-xs uppercase tracking-wide text-ink-700/75">{label}</p>
       <p className="mt-1 font-display text-xl font-semibold">{value}</p>
     </div>
   );

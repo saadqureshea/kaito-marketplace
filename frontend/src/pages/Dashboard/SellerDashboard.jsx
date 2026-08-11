@@ -188,7 +188,7 @@ export default function SellerDashboard() {
             {savingProfile ? "Saving..." : "Save store settings"}
           </button>
         </form>
-        <p className="mt-2 text-xs text-ink-700/50">
+        <p className="mt-2 text-xs text-ink-700/75">
           Your payout email receives the 80% seller share automatically once an order is marked completed.
         </p>
       </div>
@@ -199,13 +199,13 @@ export default function SellerDashboard() {
           <div className="flex rounded-lg border border-line p-1 text-xs font-medium">
             <button
               onClick={() => setListingKind("product")}
-              className={`rounded-md px-3 py-1.5 ${listingKind === "product" ? "bg-signal-500 text-white" : "text-ink-700/60"}`}
+              className={`rounded-md px-3 py-1.5 ${listingKind === "product" ? "bg-signal-500 text-white" : "text-ink-700/75"}`}
             >
               Product
             </button>
             <button
               onClick={() => setListingKind("service")}
-              className={`rounded-md px-3 py-1.5 ${listingKind === "service" ? "bg-signal-500 text-white" : "text-ink-700/60"}`}
+              className={`rounded-md px-3 py-1.5 ${listingKind === "service" ? "bg-signal-500 text-white" : "text-ink-700/75"}`}
             >
               Service
             </button>
@@ -362,7 +362,7 @@ export default function SellerDashboard() {
               />
             </div>
 
-            <p className="mt-2 text-xs font-medium uppercase tracking-wide text-ink-700/50">Basic package</p>
+            <p className="mt-2 text-xs font-medium uppercase tracking-wide text-ink-700/75">Basic package</p>
             <div className="grid grid-cols-3 gap-3">
               <input
                 required
@@ -392,7 +392,7 @@ export default function SellerDashboard() {
                 onChange={(e) => setServiceForm({ ...serviceForm, basicRevisions: e.target.value })}
               />
             </div>
-            <p className="text-xs text-ink-700/50">
+            <p className="text-xs text-ink-700/75">
               Standard/premium tiers can be added later by editing the listing directly in the database.
             </p>
 
@@ -406,13 +406,13 @@ export default function SellerDashboard() {
       <h2 className="mb-3 font-display text-lg font-semibold">Recent orders</h2>
       <div className="mb-10 card divide-y divide-line">
         {data.orders.length === 0 ? (
-          <p className="p-6 text-sm text-ink-700/60">No orders yet.</p>
+          <p className="p-6 text-sm text-ink-700/75">No orders yet.</p>
         ) : (
           data.orders.map((o) => (
             <div key={o._id} className="flex flex-col gap-2 p-4 text-sm sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="font-medium">{o.product?.title || o.service?.title}</p>
-                <p className="text-ink-700/60">
+                <p className="text-ink-700/75">
                   {o.buyer?.name} · payout ${o.sellerPayout?.toFixed(2)}
                 </p>
               </div>
@@ -440,7 +440,7 @@ export default function SellerDashboard() {
       <h2 className="mb-3 font-display text-lg font-semibold">Your products</h2>
       <div className="mb-8 card divide-y divide-line">
         {listings.length === 0 ? (
-          <p className="p-6 text-sm text-ink-700/60">No product listings yet.</p>
+          <p className="p-6 text-sm text-ink-700/75">No product listings yet.</p>
         ) : (
           listings.map((p) => <ListingRow key={p._id} item={p} />)
         )}
@@ -449,7 +449,7 @@ export default function SellerDashboard() {
       <h2 className="mb-3 font-display text-lg font-semibold">Your services</h2>
       <div className="card divide-y divide-line">
         {services.length === 0 ? (
-          <p className="p-6 text-sm text-ink-700/60">No service listings yet.</p>
+          <p className="p-6 text-sm text-ink-700/75">No service listings yet.</p>
         ) : (
           services.map((s) => <ListingRow key={s._id} item={s} />)
         )}
@@ -501,7 +501,7 @@ function ListingRow({ item }) {
 function Stat({ label, value, highlight }) {
   return (
     <div className={`card p-5 ${highlight ? "border-signal-500" : ""}`}>
-      <p className="text-xs uppercase tracking-wide text-ink-700/50">{label}</p>
+      <p className="text-xs uppercase tracking-wide text-ink-700/75">{label}</p>
       <p className="mt-1 font-display text-xl font-semibold">${value?.toFixed(2)}</p>
     </div>
   );

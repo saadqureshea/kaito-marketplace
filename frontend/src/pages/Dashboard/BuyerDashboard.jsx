@@ -22,14 +22,14 @@ export default function BuyerDashboard() {
       <h1 className="mb-6 font-display text-2xl font-semibold">My Orders</h1>
       <div className="card divide-y divide-line">
         {orders.length === 0 ? (
-          <p className="p-6 text-sm text-ink-700/60">No orders yet — browse the marketplace to get started.</p>
+          <p className="p-6 text-sm text-ink-700/75">No orders yet — browse the marketplace to get started.</p>
         ) : (
           orders.map((o) => (
             <div key={o._id} className="p-4 text-sm">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-medium">{o.product?.title || o.service?.title}</p>
-                  <p className="text-ink-700/60">{o.orderStatus.replace("_", " ")}</p>
+                  <p className="text-ink-700/75">{o.orderStatus.replace("_", " ")}</p>
                 </div>
                 <span className="font-semibold">${o.totalCharged?.toFixed(2)}</span>
               </div>
@@ -37,7 +37,7 @@ export default function BuyerDashboard() {
               {o.orderStatus === "completed" && (
                 <div className="mt-2">
                   {reviewedOrderIds.has(o._id) ? (
-                    <span className="text-xs text-ink-700/50">You reviewed this order.</span>
+                    <span className="text-xs text-ink-700/75">You reviewed this order.</span>
                   ) : reviewingOrderId === o._id ? (
                     <ReviewForm
                       orderId={o._id}

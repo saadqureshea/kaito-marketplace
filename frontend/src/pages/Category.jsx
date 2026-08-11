@@ -60,9 +60,9 @@ export default function Category({ section }) {
       <p className="mt-2 max-w-2xl text-ink-700/70">{config.desc}</p>
 
       {loading ? (
-        <p className="mt-10 text-center text-sm text-ink-700/50">Loading...</p>
+        <p className="mt-10 text-center text-sm text-ink-700/75">Loading...</p>
       ) : items.length === 0 ? (
-        <p className="mt-10 rounded-xl2 border border-dashed border-line p-10 text-center text-ink-700/60">
+        <p className="mt-10 rounded-xl2 border border-dashed border-line p-10 text-center text-ink-700/75">
           Nothing here yet — approved listings will appear once sellers start publishing.
         </p>
       ) : config.type === "job" ? (

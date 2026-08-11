@@ -31,7 +31,7 @@ export default function JobDetail() {
   }, [id, user]);
 
   if (notFound) {
-    return <p className="mx-auto max-w-3xl px-4 py-16 text-center text-ink-700/60">Job not found.</p>;
+    return <p className="mx-auto max-w-3xl px-4 py-16 text-center text-ink-700/75">Job not found.</p>;
   }
   if (!job) return null;
 
@@ -65,7 +65,7 @@ export default function JobDetail() {
         {job.employmentType.replace(/_/g, " ")}
       </span>
       <h1 className="mt-3 font-display text-2xl font-semibold text-ink-950">{job.title}</h1>
-      <p className="mt-1 text-sm text-ink-700/60">
+      <p className="mt-1 text-sm text-ink-700/75">
         {job.employer?.name} · {job.location} · {budget}
       </p>
 
@@ -88,16 +88,16 @@ export default function JobDetail() {
         <h2 className="mb-4 font-display text-lg font-semibold">Apply to this job</h2>
 
         {!user ? (
-          <p className="text-sm text-ink-700/60">
+          <p className="text-sm text-ink-700/75">
             <Link to={`/login?next=/jobs/${id}`} className="font-medium text-signal-500">
               Log in
             </Link>{" "}
             as a worker to apply.
           </p>
         ) : user.role !== "worker" ? (
-          <p className="text-sm text-ink-700/60">Only worker accounts can apply to jobs.</p>
+          <p className="text-sm text-ink-700/75">Only worker accounts can apply to jobs.</p>
         ) : user.professionalProfile?.approvalStatus !== "approved" ? (
-          <p className="text-sm text-ink-700/60">
+          <p className="text-sm text-ink-700/75">
             Your professional profile must be approved before applying.{" "}
             <Link to="/dashboard/worker" className="font-medium text-signal-500">
               Complete your profile

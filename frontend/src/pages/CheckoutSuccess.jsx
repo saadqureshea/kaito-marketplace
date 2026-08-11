@@ -41,7 +41,7 @@ export default function CheckoutSuccess() {
       <h1 className="mb-1 font-display text-2xl font-semibold">Checkout</h1>
 
       <div className="card p-6">
-        {status === "confirming" && <p className="text-sm text-ink-700/60">Confirming your payment...</p>}
+        {status === "confirming" && <p className="text-sm text-ink-700/75">Confirming your payment...</p>}
 
         {status === "paid" && (
           <div>
@@ -49,7 +49,7 @@ export default function CheckoutSuccess() {
               Payment successful! Redirecting to your orders...
             </p>
             {order && (
-              <p className="mt-4 text-xs text-ink-700/50">
+              <p className="mt-4 text-xs text-ink-700/75">
                 Charged ${order.totalCharged?.toFixed(2)} - seller receives ${order.sellerPayout?.toFixed(2)} (80%)
                 after commission.
               </p>

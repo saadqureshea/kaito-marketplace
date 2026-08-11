@@ -9,7 +9,7 @@ export default function SectionHeader({ eyebrow, title, subtitle, to, linkLabel 
           <p className="text-xs font-semibold uppercase tracking-wider text-signal-500">{eyebrow}</p>
         )}
         <h2 className="mt-1 font-display text-2xl font-semibold text-ink-950">{title}</h2>
-        {subtitle && <p className="mt-1 text-sm text-ink-700/65">{subtitle}</p>}
+        {subtitle && <p className="mt-1 text-sm text-ink-700/75">{subtitle}</p>}
       </div>
       {to && (
         <Link

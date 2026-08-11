@@ -57,12 +57,12 @@ export default function ServiceCard({ item }) {
           {item.title}
         </h3>
 
-        {storeName && <p className="mt-1 text-xs text-ink-700/55">by {storeName}</p>}
+        {storeName && <p className="mt-1 text-xs text-ink-700/75">by {storeName}</p>}
 
         <div className="mt-2 flex items-center gap-3">
           <Rating rating={item.rating} numReviews={item.numReviews} />
           {item.totalOrders > 0 && (
-            <span className="text-xs text-ink-700/50">{compact(item.totalOrders)} orders</span>
+            <span className="text-xs text-ink-700/75">{compact(item.totalOrders)} orders</span>
           )}
         </div>
 
@@ -71,7 +71,7 @@ export default function ServiceCard({ item }) {
             {tiers.map((t) => (
               <span
                 key={t.name}
-                className="rounded border border-line px-1.5 py-0.5 text-[10px] font-medium capitalize text-ink-700/60"
+                className="rounded border border-line px-1.5 py-0.5 text-[10px] font-medium capitalize text-ink-700/75"
               >
                 {t.name}
               </span>
@@ -81,13 +81,13 @@ export default function ServiceCard({ item }) {
 
         <div className="mt-auto flex items-end justify-between pt-3">
           <div>
-            <p className="text-[10px] uppercase tracking-wide text-ink-700/45">Starting at</p>
+            <p className="text-[10px] uppercase tracking-wide text-ink-700/70">Starting at</p>
             <span className="font-display text-lg font-semibold text-ink-950">
               {money(entry?.price)}
             </span>
           </div>
           {entry?.deliveryDays && (
-            <span className="inline-flex items-center gap-1 text-[11px] text-ink-700/55">
+            <span className="inline-flex items-center gap-1 text-[11px] text-ink-700/75">
               <Clock className="h-3 w-3" />
               {entry.deliveryDays}d delivery
             </span>

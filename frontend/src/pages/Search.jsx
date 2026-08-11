@@ -34,9 +34,9 @@ export default function Search() {
       <h1 className="font-display text-2xl font-semibold">Search results for &ldquo;{q}&rdquo;</h1>
 
       {loading ? (
-        <p className="mt-10 text-center text-sm text-ink-700/50">Searching...</p>
+        <p className="mt-10 text-center text-sm text-ink-700/75">Searching...</p>
       ) : total === 0 ? (
-        <p className="mt-10 rounded-xl2 border border-dashed border-line p-10 text-center text-ink-700/60">
+        <p className="mt-10 rounded-xl2 border border-dashed border-line p-10 text-center text-ink-700/75">
           No results for &ldquo;{q}&rdquo;.
         </p>
       ) : (

@@ -66,7 +66,7 @@ export default function FileUpload({ value = [], onChange, multiple = true, acce
                   href={assetUrl(url)}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex h-full w-full items-center justify-center bg-paper-100 p-1 text-center text-[10px] text-ink-700/60"
+                  className="flex h-full w-full items-center justify-center bg-paper-100 p-1 text-center text-[10px] text-ink-700/75"
                 >
                   File {i + 1}
                 </a>

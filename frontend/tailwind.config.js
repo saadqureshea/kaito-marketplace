@@ -36,9 +36,6 @@ export default {
           gold: token("gold"), // accent - used sparingly (badges, highlights)
         },
         line: token("line"),
-
-        // Always-dark backdrop for the hero, which stays dark in both themes
-        night: "#0B0D18",
       },
       fontFamily: {
         display: ["Space Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],

@@ -70,7 +70,7 @@ export default function Navbar() {
               <Link to={dashboardPathFor(user.role)} className="btn-secondary !px-4 !py-2">
                 <User className="mr-1.5 h-4 w-4" /> {user.name.split(" ")[0]}
               </Link>
-              <button onClick={logout} className="text-sm text-ink-700/60 hover:text-ink-900">
+              <button onClick={logout} className="text-sm text-ink-700/75 hover:text-ink-900">
                 Log out
               </button>
             </div>
@@ -116,7 +116,7 @@ export default function Navbar() {
             {user ? (
               <>
                 <Link to={dashboardPathFor(user.role)} onClick={() => setOpen(false)}>Dashboard</Link>
-                <button onClick={logout} className="text-left text-ink-700/60">Log out</button>
+                <button onClick={logout} className="text-left text-ink-700/75">Log out</button>
               </>
             ) : (
               <>

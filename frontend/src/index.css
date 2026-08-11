@@ -12,40 +12,45 @@
   :root {
     --c-canvas: 255 255 255;
     --c-surface: 255 255 255;
-    --c-paper-50: 250 251 252;
-    --c-paper-100: 242 244 248;
-    --c-line: 226 229 237;
+    --c-paper-50: 247 249 252;
+    --c-paper-100: 237 241 247;
+    --c-line: 222 228 238;
 
-    --c-ink-950: 14 16 36;
-    --c-ink-900: 18 20 43;
-    --c-ink-700: 42 45 82;
+    /* Neutrals sit on a slate axis rather than the previous violet-tinted
+       one, so text reads as neutral next to the indigo brand instead of
+       competing with it. */
+    --c-ink-950: 15 23 41;
+    --c-ink-900: 27 36 55;
+    --c-ink-700: 46 54 72;
 
-    --c-signal-400: 92 107 219;
-    --c-signal-500: 59 76 202;
-    --c-signal-600: 46 59 163;
+    /* Brand stays indigo but leans bluer - reads as trustworthy/marketplace
+       rather than purple, without losing the existing identity. */
+    --c-signal-400: 107 130 240;
+    --c-signal-500: 47 79 216;
+    --c-signal-600: 36 60 176;
 
-    --c-gold: 227 168 87;
-    --c-shadow: 14 16 36;
+    --c-gold: 217 152 58;
+    --c-shadow: 15 23 41;
 
     color-scheme: light;
   }
 
   .dark {
-    --c-canvas: 10 12 22;
-    --c-surface: 20 23 42;
-    --c-paper-50: 15 17 32;
-    --c-paper-100: 28 31 51;
-    --c-line: 42 46 69;
+    --c-canvas: 10 13 24;
+    --c-surface: 19 23 40;
+    --c-paper-50: 15 19 34;
+    --c-paper-100: 28 34 54;
+    --c-line: 42 49 72;
 
-    --c-ink-950: 244 245 250;
-    --c-ink-900: 226 229 240;
-    --c-ink-700: 190 195 216;
+    --c-ink-950: 244 246 251;
+    --c-ink-900: 225 230 241;
+    --c-ink-700: 189 196 214;
 
     /* Brand lightens on dark so it keeps contrast against the surface, and
        the 500/600 hover relationship flips direction. */
-    --c-signal-400: 154 165 245;
-    --c-signal-500: 122 136 240;
-    --c-signal-600: 160 172 248;
+    --c-signal-400: 158 176 252;
+    --c-signal-500: 124 149 248;
+    --c-signal-600: 162 181 253;
 
     --c-gold: 233 188 121;
     --c-shadow: 0 0 0;
@@ -85,6 +90,25 @@
   }
   .input {
     @apply w-full rounded-lg border border-line bg-surface px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-700/40 focus:border-signal-500 focus:outline-none focus:ring-1 focus:ring-signal-500;
+  }
+
+  /* The hero used to be a near-black slab, which dominated the page and made
+     product imagery recede. A tinted light surface keeps it premium while
+     letting the listings carry the page. Built from the same variables, so it
+     adapts to dark mode without a second rule. */
+  .hero-surface {
+    background-image:
+      radial-gradient(900px 420px at 12% -10%, rgb(var(--c-signal-500) / 0.14), transparent 62%),
+      radial-gradient(700px 400px at 92% 0%, rgb(var(--c-gold) / 0.1), transparent 60%),
+      linear-gradient(180deg, rgb(var(--c-paper-50)) 0%, rgb(var(--c-canvas)) 100%);
+  }
+
+  /* Swipeable rails shouldn't show a scrollbar over the cards. */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 
   /* Status pills - shared by listing/order/application states so the

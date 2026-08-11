@@ -25,7 +25,7 @@ export default function ServiceDetail() {
   }, [id]);
 
   if (notFound) {
-    return <p className="mx-auto max-w-3xl px-4 py-16 text-center text-ink-700/60">Service not found.</p>;
+    return <p className="mx-auto max-w-3xl px-4 py-16 text-center text-ink-700/75">Service not found.</p>;
   }
   if (!service) return null;
 
@@ -52,7 +52,7 @@ export default function ServiceDetail() {
             {service.category.replace(/_/g, " ")}
           </span>
           <h1 className="mt-3 font-display text-2xl font-semibold text-ink-950">{service.title}</h1>
-          <p className="mt-1 text-sm text-ink-700/60">by {service.seller?.sellerProfile?.storeName || service.seller?.name}</p>
+          <p className="mt-1 text-sm text-ink-700/75">by {service.seller?.sellerProfile?.storeName || service.seller?.name}</p>
 
           {service.rating > 0 && (
             <span className="mt-2 flex items-center gap-1 text-sm text-ink-700/70">
@@ -80,7 +80,7 @@ export default function ServiceDetail() {
                   key={p.name}
                   onClick={() => setSelectedPkg(p.name)}
                   className={`flex-1 rounded-md py-1.5 text-xs font-medium capitalize transition ${
-                    p.name === selectedPkg ? "bg-signal-500 text-white" : "text-ink-700/60"
+                    p.name === selectedPkg ? "bg-signal-500 text-white" : "text-ink-700/75"
                   }`}
                 >
                   {p.name}

@@ -37,7 +37,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-line pt-6 text-xs text-ink-700/50 sm:flex-row">
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-line pt-6 text-xs text-ink-700/75 sm:flex-row">
           <span>© {new Date().getFullYear()} KAITO MarketPlace. All rights reserved.</span>
           <span>Payments processed via Stripe.</span>
         </div>

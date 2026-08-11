@@ -22,7 +22,7 @@ export default function ProductDetail() {
   }, [id]);
 
   if (notFound) {
-    return <p className="mx-auto max-w-3xl px-4 py-16 text-center text-ink-700/60">Product not found.</p>;
+    return <p className="mx-auto max-w-3xl px-4 py-16 text-center text-ink-700/75">Product not found.</p>;
   }
   if (!product) return null;
 
@@ -68,7 +68,7 @@ export default function ProductDetail() {
             {product.listingType === "digital" ? "Digital Product" : "Made-to-Order"}
           </span>
           <h1 className="mt-3 font-display text-2xl font-semibold text-ink-950">{product.title}</h1>
-          <p className="mt-1 text-sm text-ink-700/60">
+          <p className="mt-1 text-sm text-ink-700/75">
             by {product.seller?.sellerProfile?.storeName || product.seller?.name}
           </p>
 
@@ -80,7 +80,7 @@ export default function ProductDetail() {
           )}
 
           <p className="mt-5 font-display text-3xl font-semibold text-ink-950">
-            ${product.price?.toFixed(2)} <span className="text-sm font-normal text-ink-700/50">{product.currency}</span>
+            ${product.price?.toFixed(2)} <span className="text-sm font-normal text-ink-700/75">{product.currency}</span>
           </p>
 
           <button onClick={buyNow} className="btn-primary mt-6 w-full sm:w-auto">
@@ -88,7 +88,7 @@ export default function ProductDetail() {
           </button>
 
           {product.listingType === "made_to_order" && product.productionDetails?.leadTimeDays && (
-            <p className="mt-4 text-sm text-ink-700/60">
+            <p className="mt-4 text-sm text-ink-700/75">
               Lead time: {product.productionDetails.leadTimeDays} day(s)
               {product.productionDetails.customizationOptions?.length > 0 &&
                 ` · Options: ${product.productionDetails.customizationOptions.join(", ")}`}

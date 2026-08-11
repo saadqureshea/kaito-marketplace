@@ -27,7 +27,7 @@ export default function Login() {
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16">
       <h1 className="mb-1 font-display text-2xl font-semibold">Welcome back</h1>
-      <p className="mb-8 text-sm text-ink-700/60">Log in to your KAITO account.</p>
+      <p className="mb-8 text-sm text-ink-700/75">Log in to your KAITO account.</p>
 
       <form onSubmit={submit} className="card flex flex-col gap-4 p-6">
         {error && <p className="rounded-lg bg-red-50 dark:bg-red-500/10 px-3 py-2 text-sm text-red-600 dark:text-red-300">{error}</p>}
@@ -56,7 +56,7 @@ export default function Login() {
         </button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-ink-700/60">
+      <p className="mt-6 text-center text-sm text-ink-700/75">
         New to KAITO?{" "}
         <Link to="/register" className="font-medium text-signal-500">
           Create an account

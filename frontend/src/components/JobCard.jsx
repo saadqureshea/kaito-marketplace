@@ -47,9 +47,9 @@ export default function JobCard({ job }) {
           <Badge tone="signal">{titleize(job.employmentType)}</Badge>
         </div>
 
-        <p className="mt-0.5 text-sm text-ink-700/60">
+        <p className="mt-0.5 text-sm text-ink-700/75">
           {employerName}
-          {job.createdAt && <span className="text-ink-700/40"> · {timeAgo(job.createdAt)}</span>}
+          {job.createdAt && <span className="text-ink-700/70"> · {timeAgo(job.createdAt)}</span>}
         </p>
 
         {job.description && (
@@ -67,14 +67,14 @@ export default function JobCard({ job }) {
               </span>
             ))}
             {overflow > 0 && (
-              <span className="px-1 py-0.5 text-[11px] text-ink-700/45">+{overflow} more</span>
+              <span className="px-1 py-0.5 text-[11px] text-ink-700/70">+{overflow} more</span>
             )}
           </div>
         )}
 
-        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-line pt-3 text-xs text-ink-700/60">
+        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-line pt-3 text-xs text-ink-700/75">
           <span className="inline-flex items-center gap-1 font-medium text-ink-900">
-            <Wallet className="h-3.5 w-3.5 text-ink-700/50" />
+            <Wallet className="h-3.5 w-3.5 text-ink-700/75" />
             {budgetLabel(job)}
           </span>
           <span className="inline-flex items-center gap-1">
