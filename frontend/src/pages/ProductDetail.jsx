@@ -6,6 +6,7 @@ import { assetUrl } from "../utils/url.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import ReviewList from "../components/ReviewList.jsx";
 import AddToCartButton from "../components/AddToCartButton.jsx";
+import VerifiedMark from "../components/VerifiedMark.jsx";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -69,8 +70,9 @@ export default function ProductDetail() {
             {product.listingType === "digital" ? "Digital Product" : "Made-to-Order"}
           </span>
           <h1 className="mt-3 font-display text-2xl font-semibold text-ink-950">{product.title}</h1>
-          <p className="mt-1 text-sm text-ink-700/75">
-            by {product.seller?.sellerProfile?.storeName || product.seller?.name}
+          <p className="mt-1 flex flex-wrap items-center gap-2 text-sm text-ink-700/75">
+            <span>by {product.seller?.sellerProfile?.storeName || product.seller?.name}</span>
+            {product.seller?.sellerProfile?.isVerifiedSeller && <VerifiedMark withLabel />}
           </p>
 
           {product.rating > 0 && (

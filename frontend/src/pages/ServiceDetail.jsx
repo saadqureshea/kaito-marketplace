@@ -6,6 +6,7 @@ import { assetUrl } from "../utils/url.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import ReviewList from "../components/ReviewList.jsx";
 import AddToCartButton from "../components/AddToCartButton.jsx";
+import VerifiedMark from "../components/VerifiedMark.jsx";
 
 export default function ServiceDetail() {
   const { id } = useParams();
@@ -53,7 +54,10 @@ export default function ServiceDetail() {
             {service.category.replace(/_/g, " ")}
           </span>
           <h1 className="mt-3 font-display text-2xl font-semibold text-ink-950">{service.title}</h1>
-          <p className="mt-1 text-sm text-ink-700/75">by {service.seller?.sellerProfile?.storeName || service.seller?.name}</p>
+          <p className="mt-1 flex flex-wrap items-center gap-2 text-sm text-ink-700/75">
+            <span>by {service.seller?.sellerProfile?.storeName || service.seller?.name}</span>
+            {service.seller?.sellerProfile?.isVerifiedSeller && <VerifiedMark withLabel />}
+          </p>
 
           {service.rating > 0 && (
             <span className="mt-2 flex items-center gap-1 text-sm text-ink-700/70">

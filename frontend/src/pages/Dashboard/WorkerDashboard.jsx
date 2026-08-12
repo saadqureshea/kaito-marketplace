@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../../api/axios.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import MessageThread from "../../components/MessageThread.jsx";
+import FileUpload from "../../components/FileUpload.jsx";
 
 export default function WorkerDashboard() {
   const { user, refresh } = useAuth();
@@ -40,10 +41,51 @@ export default function WorkerDashboard() {
           />
           <input
             className="input"
-            placeholder="CV URL"
-            value={profile.cvUrl || ""}
-            onChange={(e) => setProfile({ ...profile, cvUrl: e.target.value })}
+            placeholder="Skills, comma separated (e.g. React, Node.js)"
+            value={Array.isArray(profile.skills) ? profile.skills.join(", ") : profile.skills || ""}
+            onChange={(e) =>
+              setProfile({
+                ...profile,
+                skills: e.target.value.split(",").map((s) => s.trim()).filter(Boolean),
+              })
+            }
           />
+          <div className="grid grid-cols-2 gap-3">
+            <input
+              type="number"
+              min="0"
+              className="input"
+              placeholder="Hourly rate (USD)"
+              value={profile.hourlyRate || ""}
+              onChange={(e) => setProfile({ ...profile, hourlyRate: Number(e.target.value) || 0 })}
+            />
+            <input
+              type="number"
+              min="0"
+              className="input"
+              placeholder="Years experience"
+              value={profile.yearsExperience || ""}
+              onChange={(e) =>
+                setProfile({ ...profile, yearsExperience: Number(e.target.value) || 0 })
+              }
+            />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-medium">CV</label>
+            <FileUpload
+              value={profile.cvUrl ? [profile.cvUrl] : []}
+              onChange={(urls) => setProfile({ ...profile, cvUrl: urls[0] || "" })}
+              multiple={false}
+              accept="application/pdf,image/*"
+              label="Upload CV"
+              visibility="private"
+            />
+            <p className="mt-1 text-[11px] text-ink-700/70">
+              Kept private — only employers you apply to can open it.
+            </p>
+          </div>
+
           <input
             className="input"
             placeholder="Portfolio URL"

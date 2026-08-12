@@ -6,6 +6,7 @@ import Service from "../models/Service.js";
 import Job from "../models/Job.js";
 import Order from "../models/Order.js";
 import { protect, requireRole } from "../middleware/auth.js";
+import { releaseEscrow } from "./orderRoutes.js";
 
 const router = express.Router();
 router.use(protect, requireRole("admin"));
@@ -22,6 +23,10 @@ router.get(
       User.countDocuments({ "professionalProfile.approvalStatus": "pending" }),
       Order.find({ paymentStatus: "paid" }),
     ]);
+    const openDisputes = await Order.countDocuments({ orderStatus: "disputed" });
+    const heldInEscrow = paidOrders
+      .filter((o) => !o.payoutReleased && o.paymentStatus === "paid")
+      .reduce((sum, o) => sum + o.sellerPayout, 0);
 
     const revenue = paidOrders.reduce(
       (acc, o) => {
@@ -41,6 +46,8 @@ router.get(
       pendingJobs,
       pendingProfiles,
       totalOrders: paidOrders.length,
+      openDisputes,
+      heldInEscrow: Math.round(heldInEscrow * 100) / 100,
       revenue,
     });
   })
@@ -127,9 +134,79 @@ router.put("/profiles/:userId/reject", asyncHandler(async (req, res) => {
   res.json(u);
 }));
 
+// ---- Disputes ----
+router.get("/disputes", asyncHandler(async (req, res) => {
+  const disputes = await Order.find({ orderStatus: "disputed" })
+    .populate("buyer", "name email")
+    .populate("seller", "name email sellerProfile.storeName")
+    .populate("product", "title images")
+    .populate("service", "title images")
+    .sort("-disputeRaisedAt");
+  res.json(disputes);
+}));
+
+/**
+ * Settles a dispute one of three ways:
+ *   refunded  - buyer gets their money back, nothing goes to the seller
+ *   released  - dispute rejected, seller is paid as normal
+ *   cancelled - order voided without a payout
+ *
+ * The Stripe refund itself isn't automated here; this records the decision
+ * and stops the escrow from being released, so the money is still held
+ * pending a manual refund in the Stripe dashboard.
+ */
+router.put("/orders/:id/resolve", asyncHandler(async (req, res) => {
+  const { resolution, note } = req.body;
+  if (!["refunded", "released", "cancelled"].includes(resolution)) {
+    res.status(400);
+    throw new Error("resolution must be 'refunded', 'released' or 'cancelled'");
+  }
+
+  const order = await Order.findById(req.params.id);
+  if (!order) {
+    res.status(404);
+    throw new Error("Order not found");
+  }
+  if (order.orderStatus !== "disputed") {
+    res.status(409);
+    throw new Error("This order is not under dispute");
+  }
+
+  order.disputeResolution = resolution;
+  order.disputeResolutionNote = note || "";
+  order.disputeResolvedAt = new Date();
+
+  if (resolution === "released") {
+    order.orderStatus = "completed";
+    await releaseEscrow(order);
+  } else if (resolution === "refunded") {
+    order.orderStatus = "cancelled";
+    order.paymentStatus = "refunded";
+    order.escrowStatus = "refunded";
+  } else {
+    order.orderStatus = "cancelled";
+    order.escrowStatus = "refunded";
+  }
+
+  const updated = await order.save();
+  res.json(updated);
+}));
+
 // ---- User management ----
 router.get("/users", asyncHandler(async (req, res) => {
   res.json(await User.find().select("-password").sort("-createdAt"));
+}));
+
+// Verification is what the "Verified" mark on listings reflects, so it stays
+// an explicit admin action rather than anything a seller can set themselves.
+router.put("/users/:id/verify", asyncHandler(async (req, res) => {
+  const verified = req.body.verified !== false;
+  const u = await User.findByIdAndUpdate(
+    req.params.id,
+    { "sellerProfile.isVerifiedSeller": verified },
+    { new: true }
+  ).select("-password");
+  res.json(u);
 }));
 
 router.put("/users/:id/deactivate", asyncHandler(async (req, res) => {

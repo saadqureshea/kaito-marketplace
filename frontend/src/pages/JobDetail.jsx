@@ -120,7 +120,17 @@ export default function JobDetail() {
             />
             <div>
               <label className="mb-1 block text-sm font-medium">CV</label>
-              <FileUpload value={cvUrl} onChange={setCvUrl} multiple={false} accept="application/pdf,image/*" label="Upload CV" />
+              <FileUpload
+                value={cvUrl}
+                onChange={setCvUrl}
+                multiple={false}
+                accept="application/pdf,image/*"
+                label="Upload CV"
+                visibility="private"
+              />
+              <p className="mt-1 text-[11px] text-ink-700/70">
+                Only this employer and our review team can open your CV.
+              </p>
             </div>
             <input
               className="input"

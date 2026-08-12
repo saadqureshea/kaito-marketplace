@@ -214,6 +214,9 @@ router.post(
           order.paymentStatus = "paid";
           order.stripePaymentIntentId = session.payment_intent;
           order.orderStatus = order.itemType === "product" ? "in_production" : "in_progress";
+          // Money is captured but the seller's share is withheld until the
+          // buyer confirms receipt - see releaseEscrow in orderRoutes.
+          order.escrowStatus = "held";
         } else {
           order.paymentStatus = "failed";
         }

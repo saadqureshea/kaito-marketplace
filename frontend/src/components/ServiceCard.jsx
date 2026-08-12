@@ -3,6 +3,7 @@ import { ImageOff, Clock, Layers } from "lucide-react";
 import Badge from "./Badge.jsx";
 import Rating from "./Rating.jsx";
 import AddToCartButton from "./AddToCartButton.jsx";
+import VerifiedMark from "./VerifiedMark.jsx";
 import { assetUrl } from "../utils/url.js";
 import { money, compact, titleize } from "../utils/format.js";
 
@@ -58,7 +59,12 @@ export default function ServiceCard({ item }) {
           {item.title}
         </h3>
 
-        {storeName && <p className="mt-1 text-xs text-ink-700/75">by {storeName}</p>}
+        {storeName && (
+          <p className="mt-1 flex items-center gap-1 text-xs text-ink-700/75">
+            <span className="truncate">by {storeName}</span>
+            {item.seller?.sellerProfile?.isVerifiedSeller && <VerifiedMark />}
+          </p>
+        )}
 
         <div className="mt-2 flex items-center gap-3">
           <Rating rating={item.rating} numReviews={item.numReviews} />

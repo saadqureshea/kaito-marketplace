@@ -26,7 +26,7 @@ router.get(
     const skip = (Number(page) - 1) * Number(limit);
     const [items, total] = await Promise.all([
       Product.find(query)
-        .populate("seller", "name sellerProfile.storeName sellerProfile.rating")
+        .populate("seller", "name sellerProfile.storeName sellerProfile.rating sellerProfile.isVerifiedSeller")
         .sort(productSort(sort))
         .skip(skip)
         .limit(Number(limit)),

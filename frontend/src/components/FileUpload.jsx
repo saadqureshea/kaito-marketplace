@@ -3,10 +3,21 @@ import { Upload, X, Loader2 } from "lucide-react";
 import api from "../api/axios.js";
 import { assetUrl } from "../utils/url.js";
 
-// Reusable upload control backed by POST /api/uploads. `value` is always
-// an array of stored paths (["/uploads/xxx", ...]); pass multiple={false}
+// Reusable upload control backed by POST /api/uploads. `value` is always an
+// array of stored paths (["/api/uploads/<id>", ...]); pass multiple={false}
 // for single-file fields like a CV.
-export default function FileUpload({ value = [], onChange, multiple = true, accept = "image/*", label = "Upload images" }) {
+//
+// visibility="private" must be set for anything personal (CVs) - the server
+// defaults to public, so omitting it would leave the document readable by
+// anyone holding the link.
+export default function FileUpload({
+  value = [],
+  onChange,
+  multiple = true,
+  accept = "image/*",
+  label = "Upload images",
+  visibility = "public",
+}) {
   const inputId = useId();
   const inputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
@@ -21,9 +32,11 @@ export default function FileUpload({ value = [], onChange, multiple = true, acce
     try {
       const formData = new FormData();
       files.forEach((f) => formData.append("files", f));
-      const { data } = await api.post("/uploads", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const { data } = await api.post(
+        visibility === "private" ? "/uploads?visibility=private" : "/uploads",
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
       onChange(multiple ? [...value, ...data.urls] : data.urls.slice(0, 1));
     } catch (err) {
       setError(err.response?.data?.message || "Upload failed");

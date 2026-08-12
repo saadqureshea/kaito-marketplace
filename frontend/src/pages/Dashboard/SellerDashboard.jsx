@@ -17,7 +17,9 @@ const emptyProduct = {
   customizationOptions: "",
 };
 
-const ORDER_STATUS_OPTIONS = ["in_production", "in_progress", "delivered", "completed", "cancelled", "disputed"];
+// "completed" is deliberately absent: releasing the escrowed payment is the
+// buyer's action, not the seller's.
+const ORDER_STATUS_OPTIONS = ["in_production", "in_progress", "delivered", "cancelled"];
 
 const emptyService = {
   title: "",

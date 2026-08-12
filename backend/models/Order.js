@@ -64,9 +64,32 @@ const orderSchema = new mongoose.Schema(
       default: "awaiting_payment",
     },
 
+    // --- Escrow ---
+    // Funds are captured at checkout but the seller's 80% is only released
+    // once the buyer confirms receipt (or the hold period lapses), so a buyer
+    // always has recourse while the money is still held.
+    escrowStatus: {
+      type: String,
+      enum: ["none", "held", "released", "refunded"],
+      default: "none",
+    },
+    buyerConfirmedAt: { type: Date },
+    deliveredAt: { type: Date },
+
     payoutReleased: { type: Boolean, default: false },
     payoutBatchId: { type: String, default: "" },
     payoutError: { type: String, default: "" },
+
+    // --- Dispute ---
+    disputeReason: { type: String, maxlength: 2000, default: "" },
+    disputeRaisedAt: { type: Date },
+    disputeResolution: {
+      type: String,
+      enum: ["", "refunded", "released", "cancelled"],
+      default: "",
+    },
+    disputeResolutionNote: { type: String, maxlength: 2000, default: "" },
+    disputeResolvedAt: { type: Date },
   },
   { timestamps: true }
 );
