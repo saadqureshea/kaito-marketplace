@@ -85,7 +85,7 @@ export default function ServiceDetail() {
                   key={p.name}
                   onClick={() => setSelectedPkg(p.name)}
                   className={`flex-1 rounded-md py-1.5 text-xs font-medium capitalize transition ${
-                    p.name === selectedPkg ? "bg-signal-500 text-white" : "text-ink-700/75"
+                    p.name === selectedPkg ? "bg-signal-500 text-on-brand" : "text-ink-700/75"
                   }`}
                 >
                   {p.name}

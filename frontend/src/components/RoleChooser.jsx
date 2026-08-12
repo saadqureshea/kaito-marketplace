@@ -45,7 +45,7 @@ export default function RoleChooser({ className = "" }) {
           to={to}
           className="card group flex items-start gap-2.5 p-3 transition duration-200 hover:-translate-y-0.5 hover:border-signal-500 hover:shadow-lg sm:gap-3 sm:p-4"
         >
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-signal-500/10 text-signal-500 transition group-hover:bg-signal-500 group-hover:text-white sm:h-10 sm:w-10">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-signal-500/10 text-signal-500 transition group-hover:bg-signal-500 group-hover:text-on-brand sm:h-10 sm:w-10">
             <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
           </span>
           <span className="min-w-0">

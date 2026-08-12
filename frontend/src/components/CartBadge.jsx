@@ -25,7 +25,7 @@ export default function CartBadge({ className = "" }) {
       <ShoppingCart className="h-4 w-4" />
       {count > 0 && (
         <span
-          className={`absolute -right-1 -top-1 flex h-[1.125rem] min-w-[1.125rem] items-center justify-center rounded-full bg-signal-500 px-1 text-[10px] font-semibold leading-none text-white ${
+          className={`absolute -right-1 -top-1 flex h-[1.125rem] min-w-[1.125rem] items-center justify-center rounded-full bg-signal-500 px-1 text-[10px] font-semibold leading-none text-on-brand ${
             bump ? "animate-bump" : ""
           }`}
         >

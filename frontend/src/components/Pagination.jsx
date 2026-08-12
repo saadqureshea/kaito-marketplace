@@ -45,7 +45,7 @@ export default function Pagination({ page, pages, onChange }) {
             aria-current={p === page ? "page" : undefined}
             className={`press flex h-9 min-w-[2.25rem] items-center justify-center rounded-full px-2 text-sm font-medium transition ${
               p === page
-                ? "bg-signal-500 text-white"
+                ? "bg-signal-500 text-on-brand"
                 : "border border-line text-ink-700/85 hover:border-signal-500 hover:text-signal-500"
             }`}
           >

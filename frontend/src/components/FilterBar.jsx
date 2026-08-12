@@ -76,7 +76,7 @@ export default function FilterBar({ type = "product", value, onChange, total }) 
               <SlidersHorizontal className="h-3.5 w-3.5" />
               Filters
               {activeCount > 0 && (
-                <span className="ml-0.5 rounded-full bg-signal-500 px-1.5 text-[10px] text-white">
+                <span className="ml-0.5 rounded-full bg-signal-500 px-1.5 text-[10px] text-on-brand">
                   {activeCount}
                 </span>
               )}

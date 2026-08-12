@@ -201,13 +201,13 @@ export default function SellerDashboard() {
           <div className="flex rounded-lg border border-line p-1 text-xs font-medium">
             <button
               onClick={() => setListingKind("product")}
-              className={`rounded-md px-3 py-1.5 ${listingKind === "product" ? "bg-signal-500 text-white" : "text-ink-700/75"}`}
+              className={`rounded-md px-3 py-1.5 ${listingKind === "product" ? "bg-signal-500 text-on-brand" : "text-ink-700/75"}`}
             >
               Product
             </button>
             <button
               onClick={() => setListingKind("service")}
-              className={`rounded-md px-3 py-1.5 ${listingKind === "service" ? "bg-signal-500 text-white" : "text-ink-700/75"}`}
+              className={`rounded-md px-3 py-1.5 ${listingKind === "service" ? "bg-signal-500 text-on-brand" : "text-ink-700/75"}`}
             >
               Service
             </button>

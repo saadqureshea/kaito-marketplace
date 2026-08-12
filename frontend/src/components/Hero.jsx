@@ -107,7 +107,7 @@ export default function Hero({ products }) {
         {/* Live listings - grid on desktop, swipeable rail on mobile */}
         <div className="mt-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0">
           <div className="mb-3 flex items-end justify-between">
-            <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-ink-700/70">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-ink-700/70">
               Live on the marketplace
             </h2>
             <Link to="/digital-products" className="text-xs font-medium text-signal-500 hover:underline">

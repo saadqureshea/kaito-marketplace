@@ -43,7 +43,7 @@ export default function CategoryTabs() {
             to={to}
             className="card group flex flex-col gap-4 p-6 transition hover:-translate-y-0.5 hover:border-signal-500"
           >
-            <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-signal-500/10 text-signal-500 transition group-hover:bg-signal-500 group-hover:text-white">
+            <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-signal-500/10 text-signal-500 transition group-hover:bg-signal-500 group-hover:text-on-brand">
               <Icon className="h-5 w-5" />
             </span>
             <div>

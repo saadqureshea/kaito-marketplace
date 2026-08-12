@@ -10,49 +10,61 @@
    always *background*, so in dark mode ink resolves to a light colour. */
 @layer base {
   :root {
-    --c-canvas: 255 255 255;
+    /* Canvas is warm off-white paper rather than pure white, with cards a
+       touch brighter than the page - so a card lifts off the background on
+       tone alone, before any border or shadow does the work. */
+    --c-canvas: 251 250 247;
     --c-surface: 255 255 255;
-    --c-paper-50: 247 249 252;
-    --c-paper-100: 237 241 247;
-    --c-line: 222 228 238;
+    --c-paper-50: 245 243 237;
+    --c-paper-100: 237 234 225;
+    --c-line: 226 222 210;
 
-    /* Neutrals sit on a slate axis rather than the previous violet-tinted
-       one, so text reads as neutral next to the indigo brand instead of
-       competing with it. */
-    --c-ink-950: 15 23 41;
-    --c-ink-900: 27 36 55;
-    --c-ink-700: 46 54 72;
+    /* Neutrals carry a green-warm cast so they sit with the brand instead of
+       reading as cold grey dropped on warm paper. */
+    --c-ink-950: 26 31 28;
+    --c-ink-900: 42 48 44;
+    --c-ink-700: 62 70 64;
 
-    /* Brand stays indigo but leans bluer - reads as trustworthy/marketplace
-       rather than purple, without losing the existing identity. */
-    --c-signal-400: 107 130 240;
-    --c-signal-500: 47 79 216;
-    --c-signal-600: 36 60 176;
+    /* Deep emerald: the craft/provenance register the marketplace actually
+       trades on, and a deliberate move away from the indigo every
+       marketplace template defaults to. */
+    --c-signal-400: 62 143 110;
+    --c-signal-500: 31 107 79;
+    --c-signal-600: 23 81 60;
 
-    --c-gold: 217 152 58;
-    --c-shadow: 15 23 41;
+    /* Warm sand. Fills and marks only - too light for text on paper. */
+    --c-gold: 200 138 61;
+
+    /* Whatever sits on top of a brand fill. Kept separate from the ink scale
+       because ink inverts with the theme while this has to track the *fill*:
+       the brand lightens on dark, so white-on-brand would drop to ~3:1. */
+    --c-on-brand: 255 255 255;
+
+    --c-shadow: 26 31 28;
 
     color-scheme: light;
   }
 
   .dark {
-    --c-canvas: 10 13 24;
-    --c-surface: 19 23 40;
-    --c-paper-50: 15 19 34;
-    --c-paper-100: 28 34 54;
-    --c-line: 42 49 72;
+    --c-canvas: 14 19 17;
+    --c-surface: 22 28 25;
+    --c-paper-50: 19 25 23;
+    --c-paper-100: 33 41 37;
+    --c-line: 44 53 49;
 
-    --c-ink-950: 244 246 251;
-    --c-ink-900: 225 230 241;
-    --c-ink-700: 189 196 214;
+    --c-ink-950: 244 246 243;
+    --c-ink-900: 226 230 225;
+    --c-ink-700: 185 194 187;
 
     /* Brand lightens on dark so it keeps contrast against the surface, and
        the 500/600 hover relationship flips direction. */
-    --c-signal-400: 158 176 252;
-    --c-signal-500: 124 149 248;
-    --c-signal-600: 162 181 253;
+    --c-signal-400: 62 143 110;
+    --c-signal-500: 79 163 124;
+    --c-signal-600: 111 191 152;
 
-    --c-gold: 233 188 121;
+    --c-gold: 223 174 114;
+    --c-on-brand: 14 19 17;
+
     --c-shadow: 0 0 0;
 
     color-scheme: dark;
@@ -73,14 +85,28 @@
     transition: none !important;
   }
 
-  h1, h2, h3, h4 {
+  /* Only the large headings take the serif. h3/h4 are mostly card titles at
+     14-16px, where a serif crowds in a dense grid and scans worse than the
+     sans - individual h3s opt back in with font-display where they're big
+     enough to carry it. */
+  h1, h2 {
     @apply font-display text-ink-950;
+  }
+  h3, h4 {
+    @apply text-ink-950;
+  }
+
+  /* Fraunces is variable: let it pick its optical size, and pull tracking in
+     a touch at display sizes where it otherwise reads loose. */
+  .font-display {
+    font-optical-sizing: auto;
+    letter-spacing: -0.015em;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-signal-500 px-5 py-2.5 text-sm font-semibold text-white shadow-card transition hover:bg-signal-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-500 disabled:cursor-not-allowed disabled:opacity-60;
+    @apply inline-flex items-center justify-center rounded-full bg-signal-500 px-5 py-2.5 text-sm font-semibold text-on-brand shadow-card transition hover:bg-signal-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-500 disabled:cursor-not-allowed disabled:opacity-60;
   }
   .btn-secondary {
     @apply inline-flex items-center justify-center rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-semibold text-ink-900 transition hover:border-signal-500 hover:text-signal-500 disabled:cursor-not-allowed disabled:opacity-60;

@@ -15,6 +15,7 @@ export default {
         // Semantic surfaces
         canvas: token("canvas"), // page background
         surface: token("surface"), // cards, navbar, inputs
+        "on-brand": token("on-brand"), // text/icons sitting on a signal fill
 
         // KAITO design tokens - "signal indigo" identity, not the generic
         // cream/terracotta AI-default palette.
@@ -38,7 +39,9 @@ export default {
         line: token("line"),
       },
       fontFamily: {
-        display: ["Space Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+        // A warm serif carries the craft/editorial register the emerald
+        // palette sets up; a geometric sans read as generic tech next to it.
+        display: ["Fraunces", "ui-serif", "Georgia", "serif"],
         body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       boxShadow: {

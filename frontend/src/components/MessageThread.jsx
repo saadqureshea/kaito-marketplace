@@ -36,7 +36,7 @@ export default function MessageThread({ applicationId, initialMessages = [] }) {
               <div key={m._id || i} className={`flex ${isMine ? "justify-end" : "justify-start"}`}>
                 <div
                   className={`max-w-[75%] rounded-lg px-3 py-1.5 text-xs ${
-                    isMine ? "bg-signal-500 text-white" : "bg-paper-100 text-ink-900"
+                    isMine ? "bg-signal-500 text-on-brand" : "bg-paper-100 text-ink-900"
                   }`}
                 >
                   {m.body}

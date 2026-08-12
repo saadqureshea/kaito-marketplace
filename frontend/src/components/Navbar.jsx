@@ -30,7 +30,7 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-signal-500 font-display text-sm font-bold text-white">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-signal-500 font-display text-sm font-bold text-on-brand">
             K
           </span>
           <span className="font-display text-lg font-semibold tracking-tight text-ink-950">
