@@ -63,6 +63,9 @@ export default function Navbar() {
           <Link to="/remote-work" className="text-sm font-medium text-ink-900 hover:text-signal-500">
             Remote Work
           </Link>
+          <Link to="/talent" className="text-sm font-medium text-ink-900 hover:text-signal-500">
+            Hire Talent
+          </Link>
 
           <ThemeToggle />
           <CartBadge />
@@ -115,6 +118,7 @@ export default function Navbar() {
             <Link to="/made-to-order" onClick={() => setOpen(false)}>Made-to-Order</Link>
             <Link to="/services" onClick={() => setOpen(false)}>Services</Link>
             <Link to="/remote-work" onClick={() => setOpen(false)}>Remote Work</Link>
+            <Link to="/talent" onClick={() => setOpen(false)}>Hire Talent</Link>
             <hr className="border-line" />
             {user ? (
               <>

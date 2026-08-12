@@ -8,6 +8,7 @@ import ProductCard from "../components/ProductCard.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
 import JobCard from "../components/JobCard.jsx";
 import ProductRow from "../components/ProductRow.jsx";
+import TalentCard from "../components/TalentCard.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import api from "../api/axios.js";
 
@@ -41,6 +42,7 @@ export default function Home() {
   const [products, setProducts] = useState(null);
   const [services, setServices] = useState(null);
   const [jobs, setJobs] = useState(null);
+  const [talent, setTalent] = useState(null);
 
   useEffect(() => {
     api.get("/products", { params: { limit: 12 } })
@@ -54,6 +56,10 @@ export default function Home() {
     api.get("/jobs", { params: { limit: 3 } })
       .then(({ data }) => setJobs(data.items))
       .catch(() => setJobs([]));
+
+    api.get("/talent", { params: { limit: 3 } })
+      .then(({ data }) => setTalent(data.items))
+      .catch(() => setTalent([]));
   }, []);
 
   // The hero features the first four; the grid below picks up from there so
@@ -155,6 +161,28 @@ export default function Home() {
           </div>
         )}
       </section>
+
+      {/* Talent */}
+      {talent === null ? null : talent.length > 0 ? (
+        <section className="border-t border-line bg-paper-50">
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <SectionHeader
+              eyebrow="Verified professionals"
+              title="Hire remote talent"
+              subtitle="Profiles reviewed by our team before they go live."
+              to="/talent"
+              linkLabel="Browse all talent"
+            />
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {talent.map((w, i) => (
+                <div key={w._id} className="rise" style={{ "--i": i }}>
+                  <TalentCard worker={w} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <TrustBar />
       <HowItWorks />

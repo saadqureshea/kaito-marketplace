@@ -12,6 +12,8 @@ import Search from "./pages/Search.jsx";
 import ProductDetail from "./pages/ProductDetail.jsx";
 import ServiceDetail from "./pages/ServiceDetail.jsx";
 import JobDetail from "./pages/JobDetail.jsx";
+import Talent from "./pages/Talent.jsx";
+import TalentDetail from "./pages/TalentDetail.jsx";
 import BuyerDashboard from "./pages/Dashboard/BuyerDashboard.jsx";
 import SellerDashboard from "./pages/Dashboard/SellerDashboard.jsx";
 import WorkerDashboard from "./pages/Dashboard/WorkerDashboard.jsx";
@@ -52,6 +54,8 @@ export default function App() {
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/services/:id" element={<ServiceDetail />} />
           <Route path="/jobs/:id" element={<JobDetail />} />
+          <Route path="/talent" element={<Talent />} />
+          <Route path="/talent/:id" element={<TalentDetail />} />
 
           <Route
             path="/dashboard/buyer"

@@ -22,6 +22,7 @@ import stripeRoutes from "./routes/stripeRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
+import talentRoutes from "./routes/talentRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 dotenv.config();
@@ -53,6 +54,7 @@ app.use("/api/payments", stripeRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/uploads", uploadRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/talent", talentRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

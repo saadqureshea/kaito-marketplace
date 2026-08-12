@@ -61,6 +61,83 @@ const users = [
     },
   },
   { name: "Emery Employer", email: "employer@kaito.dev", role: "employer" },
+
+  // Extra approved workers so the talent directory has something to browse.
+  {
+    name: "Rafi Ahmed",
+    email: "rafi@kaito.dev",
+    role: "worker",
+    country: "Pakistan",
+    bio: "Backend engineer focused on APIs, payments and data pipelines.",
+    professionalProfile: {
+      headline: "Backend & API Engineer",
+      skills: ["Node.js", "PostgreSQL", "AWS", "Stripe"],
+      hourlyRate: 38,
+      portfolioUrl: "https://example.com/rafi",
+      yearsExperience: 6,
+      approvalStatus: "approved",
+    },
+  },
+  {
+    name: "Mina Park",
+    email: "mina@kaito.dev",
+    role: "worker",
+    country: "South Korea",
+    bio: "Product designer working across research, UI systems and prototyping.",
+    professionalProfile: {
+      headline: "Product & UI/UX Designer",
+      skills: ["Figma", "Design Systems", "Prototyping", "User Research"],
+      hourlyRate: 52,
+      portfolioUrl: "https://example.com/mina",
+      yearsExperience: 8,
+      approvalStatus: "approved",
+    },
+  },
+  {
+    name: "Tomas Silva",
+    email: "tomas@kaito.dev",
+    role: "worker",
+    country: "Portugal",
+    bio: "Motion designer and video editor for short-form and product launches.",
+    professionalProfile: {
+      headline: "Video Editor & Motion Designer",
+      skills: ["After Effects", "Premiere Pro", "Motion Graphics"],
+      hourlyRate: 29,
+      portfolioUrl: "https://example.com/tomas",
+      yearsExperience: 4,
+      approvalStatus: "approved",
+    },
+  },
+  {
+    name: "Aisha Bello",
+    email: "aisha@kaito.dev",
+    role: "worker",
+    country: "Nigeria",
+    bio: "Technical writer and content strategist for developer tools.",
+    professionalProfile: {
+      headline: "Technical Writer & Content Strategist",
+      skills: ["Technical Writing", "SEO", "Documentation", "Content Strategy"],
+      hourlyRate: 33,
+      portfolioUrl: "https://example.com/aisha",
+      yearsExperience: 5,
+      approvalStatus: "approved",
+    },
+  },
+  {
+    name: "Lucas Meyer",
+    email: "lucas@kaito.dev",
+    role: "worker",
+    country: "Germany",
+    bio: "AI engineer building retrieval systems and automation workflows.",
+    professionalProfile: {
+      headline: "AI & Automation Engineer",
+      skills: ["Python", "LangChain", "RAG", "Node.js"],
+      hourlyRate: 65,
+      portfolioUrl: "https://example.com/lucas",
+      yearsExperience: 7,
+      approvalStatus: "approved",
+    },
+  },
 ];
 
 async function seedUsers() {
