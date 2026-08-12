@@ -1,6 +1,7 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
 import Product from "../models/Product.js";
+import Order from "../models/Order.js";
 import { protect, requireRole } from "../middleware/auth.js";
 import { productSort } from "../utils/sorting.js";
 
@@ -34,6 +35,92 @@ router.get(
     ]);
 
     res.json({ items, total, page: Number(page), pages: Math.ceil(total / limit) });
+  })
+);
+
+/**
+ * @route GET /api/products/:id/related
+ * Content-based "you may also like": same category or overlapping tags,
+ * ranked by rating then sales. Deliberately not collaborative filtering -
+ * a young marketplace has too little order history for that to beat simply
+ * showing well-reviewed items from the same category.
+ */
+router.get(
+  "/:id/related",
+  asyncHandler(async (req, res) => {
+    const limit = Math.min(Number(req.query.limit) || 4, 12);
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      res.status(404);
+      throw new Error("Product not found");
+    }
+
+    const related = await Product.find({
+      _id: { $ne: product._id },
+      status: "approved",
+      $or: [{ category: product.category }, { tags: { $in: product.tags || [] } }],
+    })
+      .populate("seller", "name sellerProfile.storeName sellerProfile.isVerifiedSeller")
+      .sort("-rating -totalSold")
+      .limit(limit);
+
+    // Backfill from the same listing type so the row is never half empty.
+    if (related.length < limit) {
+      const filler = await Product.find({
+        _id: { $nin: [product._id, ...related.map((r) => r._id)] },
+        status: "approved",
+        listingType: product.listingType,
+      })
+        .populate("seller", "name sellerProfile.storeName sellerProfile.isVerifiedSeller")
+        .sort("-totalSold")
+        .limit(limit - related.length);
+      related.push(...filler);
+    }
+
+    res.json(related);
+  })
+);
+
+/**
+ * @route GET /api/products/recommended  (signed in)
+ * Picks categories from what this buyer has already ordered and surfaces
+ * well-rated listings from them, excluding anything already bought. Falls
+ * back to top sellers for a buyer with no history, so the row always has
+ * something to show.
+ */
+router.get(
+  "/mine/recommended",
+  protect,
+  asyncHandler(async (req, res) => {
+    const limit = Math.min(Number(req.query.limit) || 4, 12);
+
+    const orders = await Order.find({ buyer: req.user._id, itemType: "product" })
+      .populate("product", "category")
+      .select("product");
+
+    const boughtIds = orders.map((o) => o.product?._id).filter(Boolean);
+    const categories = [...new Set(orders.map((o) => o.product?.category).filter(Boolean))];
+
+    const query = { status: "approved", _id: { $nin: boughtIds } };
+    if (categories.length) query.category = { $in: categories };
+
+    let items = await Product.find(query)
+      .populate("seller", "name sellerProfile.storeName sellerProfile.isVerifiedSeller")
+      .sort("-rating -totalSold")
+      .limit(limit);
+
+    if (items.length < limit) {
+      const filler = await Product.find({
+        status: "approved",
+        _id: { $nin: [...boughtIds, ...items.map((i) => i._id)] },
+      })
+        .populate("seller", "name sellerProfile.storeName sellerProfile.isVerifiedSeller")
+        .sort("-totalSold")
+        .limit(limit - items.length);
+      items = [...items, ...filler];
+    }
+
+    res.json({ items, basedOn: categories });
   })
 );
 

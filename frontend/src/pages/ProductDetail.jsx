@@ -7,6 +7,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import ReviewList from "../components/ReviewList.jsx";
 import AddToCartButton from "../components/AddToCartButton.jsx";
 import VerifiedMark from "../components/VerifiedMark.jsx";
+import ProductRow from "../components/ProductRow.jsx";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -131,6 +132,15 @@ export default function ProductDetail() {
       <div className="mt-14">
         <h2 className="mb-4 font-display text-xl font-semibold">Reviews</h2>
         <ReviewList itemType="product" itemId={id} />
+      </div>
+
+      <div className="mt-16">
+        <ProductRow
+          endpoint={`/products/${id}/related`}
+          eyebrow="You may also like"
+          title="Similar listings"
+          subtitle="Picked from the same category and tags."
+        />
       </div>
 
       <p className="mt-10">

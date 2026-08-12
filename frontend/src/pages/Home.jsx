@@ -7,6 +7,8 @@ import SectionHeader from "../components/SectionHeader.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
 import JobCard from "../components/JobCard.jsx";
+import ProductRow from "../components/ProductRow.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import api from "../api/axios.js";
 
 function EmptyState({ children }) {
@@ -35,6 +37,7 @@ function CardGridSkeleton({ count = 4 }) {
 }
 
 export default function Home() {
+  const { user } = useAuth();
   const [products, setProducts] = useState(null);
   const [services, setServices] = useState(null);
   const [jobs, setJobs] = useState(null);
@@ -61,6 +64,19 @@ export default function Home() {
     <>
       <Hero products={products} />
       <CategoryTabs />
+
+      {/* Only meaningful once we know who's looking; ProductRow renders
+          nothing if the endpoint comes back empty. */}
+      {user && (
+        <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
+          <ProductRow
+            endpoint="/products/mine/recommended"
+            eyebrow="For you"
+            title="Recommended for you"
+            subtitle="Based on what you've bought before."
+          />
+        </section>
+      )}
 
       {/* Products */}
       <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
