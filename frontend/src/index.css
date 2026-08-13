@@ -74,6 +74,14 @@
     @apply bg-canvas font-body text-ink-900;
   }
 
+  /* Fraunces/Inter carry no Urdu glyphs, so Urdu text would otherwise fall
+     back to whatever generic serif/sans the OS picks. Noto Nastaliq Urdu is
+     the standard web font for Urdu's Nastaliq script. */
+  html[lang="ur"] body,
+  html[lang="ur"] .font-display {
+    font-family: "Noto Nastaliq Urdu", "Fraunces", serif;
+  }
+
   /* Applied for one frame while the theme swaps. Elements carrying Tailwind's
      `transition` utility otherwise keep their previously-computed colour when
      the underlying custom property changes, leaving cards stuck on the old

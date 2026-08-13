@@ -3,19 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Search, ShieldCheck, Lock, BadgeCheck } from "lucide-react";
 import ProductCard from "./ProductCard.jsx";
 import RoleChooser from "./RoleChooser.jsx";
-
-const QUICK_LINKS = [
-  { to: "/digital-products", label: "Templates" },
-  { to: "/made-to-order", label: "Handmade" },
-  { to: "/services", label: "Design services" },
-  { to: "/remote-work", label: "Remote jobs" },
-];
-
-const ASSURANCES = [
-  { icon: ShieldCheck, label: "Admin-reviewed listings" },
-  { icon: Lock, label: "Payment held until you confirm" },
-  { icon: BadgeCheck, label: "No listing fees" },
-];
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 function CardSkeleton() {
   return (
@@ -39,6 +27,7 @@ function CardSkeleton() {
 export default function Hero({ products }) {
   const [q, setQ] = useState("");
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const submit = (e) => {
     e.preventDefault();
@@ -47,6 +36,19 @@ export default function Hero({ products }) {
 
   const featured = (products || []).slice(0, 4);
   const loading = products === null;
+
+  const quickLinks = [
+    { to: "/digital-products", label: t("hero.templates") },
+    { to: "/made-to-order", label: t("hero.handmade") },
+    { to: "/services", label: t("hero.designServices") },
+    { to: "/remote-work", label: t("hero.remoteJobs") },
+  ];
+
+  const assurances = [
+    { icon: ShieldCheck, label: t("hero.assurance1") },
+    { icon: Lock, label: t("hero.assurance2") },
+    { icon: BadgeCheck, label: t("hero.assurance3") },
+  ];
 
   return (
     <section className="hero-surface border-b border-line">
@@ -58,17 +60,15 @@ export default function Hero({ products }) {
         {/* Copy + search */}
         <div className="lg:col-start-1 lg:row-start-1 lg:pt-4">
           <p className="inline-flex items-center rounded-full border border-signal-500/25 bg-signal-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-signal-600">
-            Digital goods · Custom orders · Services · Remote work
+            {t("hero.eyebrow")}
           </p>
 
           <h1 className="mt-4 font-display text-3xl font-semibold leading-tight text-ink-950 sm:text-4xl lg:text-[2.75rem]">
-            The marketplace for digital work and handmade goods.
+            {t("hero.title")}
           </h1>
 
           <p className="mt-4 max-w-xl text-base text-ink-700/75">
-            Buy templates, code and custom-made pieces, hire specialists, or start selling
-            your own. No joining fee and no listing fee — commission is only charged when
-            something sells, and sellers keep 80%.
+            {t("hero.subtitle")}
           </p>
 
           <form onSubmit={submit} className="mt-6 flex gap-2">
@@ -78,20 +78,20 @@ export default function Hero({ products }) {
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 aria-label="Search the marketplace"
-                placeholder="Search products, services or jobs..."
+                placeholder={t("hero.searchPlaceholder")}
                 className="w-full rounded-full border border-line bg-surface py-3 pl-11 pr-4 text-sm text-ink-900 shadow-card placeholder:text-ink-700/40 focus:border-signal-500 focus:outline-none focus:ring-1 focus:ring-signal-500"
               />
             </div>
             <button type="submit" className="btn-primary shrink-0 !px-5">
-              Search
+              {t("hero.search")}
             </button>
           </form>
 
           {/* Hidden on phones to keep the listings above the fold - the
               category tiles further down cover the same ground there. */}
           <div className="mt-3 hidden flex-wrap items-center gap-x-2 gap-y-1.5 text-xs text-ink-700/75 sm:flex">
-            <span className="font-medium">Popular:</span>
-            {QUICK_LINKS.map(({ to, label }) => (
+            <span className="font-medium">{t("hero.popular")}</span>
+            {quickLinks.map(({ to, label }) => (
               <Link
                 key={to}
                 to={to}
@@ -109,10 +109,10 @@ export default function Hero({ products }) {
         <div className="mt-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0">
           <div className="mb-3 flex items-end justify-between">
             <h2 className="text-sm font-semibold uppercase tracking-wider text-ink-700/70">
-              Live on the marketplace
+              {t("hero.liveOnMarketplace")}
             </h2>
             <Link to="/digital-products" className="text-xs font-medium text-signal-500 hover:underline">
-              See all
+              {t("hero.seeAll")}
             </Link>
           </div>
 
@@ -124,7 +124,7 @@ export default function Hero({ products }) {
             </div>
           ) : featured.length === 0 ? (
             <p className="rounded-xl2 border border-dashed border-line bg-surface/60 p-10 text-center text-sm text-ink-700/75">
-              Listings will appear here as sellers publish them.
+              {t("hero.emptyListings")}
             </p>
           ) : (
             /* One set of cards that reflows: a swipeable rail on phones,
@@ -145,7 +145,7 @@ export default function Hero({ products }) {
         {/* Assurances */}
         <div className="mt-6 lg:col-start-1 lg:row-start-2 lg:mt-0">
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
-            {ASSURANCES.map(({ icon: Icon, label }) => (
+            {assurances.map(({ icon: Icon, label }) => (
               <li key={label} className="inline-flex items-center gap-1.5 text-xs text-ink-700/75">
                 <Icon className="h-3.5 w-3.5 text-signal-500" />
                 {label}

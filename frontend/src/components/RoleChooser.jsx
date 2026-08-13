@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ShoppingBag, Store, ArrowRight } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 /**
  * Front-door role split. A visitor shouldn't have to work out which side of
@@ -10,6 +11,7 @@ import { useAuth } from "../context/AuthContext.jsx";
  */
 export default function RoleChooser({ className = "" }) {
   const { user } = useAuth();
+  const { t } = useLanguage();
 
   const sellerPath = !user
     ? "/register?role=seller"
@@ -21,16 +23,16 @@ export default function RoleChooser({ className = "" }) {
     {
       to: "/digital-products",
       icon: ShoppingBag,
-      label: "I'm a Buyer",
-      detail: "Browse products, services and hire remote talent",
-      cta: "Start browsing",
+      label: t("role.buyerLabel"),
+      detail: t("role.buyerDetail"),
+      cta: t("role.buyerCta"),
     },
     {
       to: sellerPath,
       icon: Store,
-      label: "I'm a Seller",
-      detail: "List your work and keep 80% of every sale",
-      cta: user?.role === "seller" ? "Go to dashboard" : "Start selling",
+      label: t("role.sellerLabel"),
+      detail: t("role.sellerDetail"),
+      cta: user?.role === "seller" ? t("role.sellerCtaDashboard") : t("role.sellerCtaStart"),
     },
   ];
 

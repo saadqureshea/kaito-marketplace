@@ -3,7 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { Search, Menu, X, User, Heart } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useFavourites } from "../context/FavouritesContext.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
+import LanguageSwitcher from "./LanguageSwitcher.jsx";
 import CartBadge from "./CartBadge.jsx";
 
 const dashboardPathFor = (role) =>
@@ -18,6 +20,7 @@ const dashboardPathFor = (role) =>
 export default function Navbar() {
   const { user, logout } = useAuth();
   const { count: favouriteCount } = useFavourites();
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const navigate = useNavigate();
@@ -46,7 +49,7 @@ export default function Navbar() {
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Search templates, services, jobs..."
+            placeholder={t("nav.searchPlaceholder")}
             className="input pl-9"
           />
         </form>
@@ -54,27 +57,28 @@ export default function Navbar() {
         {/* Desktop nav */}
         <nav className="ml-auto hidden items-center gap-6 md:flex">
           <Link to="/digital-products" className="text-sm font-medium text-ink-900 hover:text-signal-500">
-            Digital Products
+            {t("nav.digitalProducts")}
           </Link>
           <Link to="/made-to-order" className="text-sm font-medium text-ink-900 hover:text-signal-500">
-            Made-to-Order
+            {t("nav.madeToOrder")}
           </Link>
           <Link to="/services" className="text-sm font-medium text-ink-900 hover:text-signal-500">
-            Services
+            {t("nav.services")}
           </Link>
           <Link to="/remote-work" className="text-sm font-medium text-ink-900 hover:text-signal-500">
-            Remote Work
+            {t("nav.remoteWork")}
           </Link>
           <Link to="/talent" className="text-sm font-medium text-ink-900 hover:text-signal-500">
-            Hire Talent
+            {t("nav.hireTalent")}
           </Link>
 
+          <LanguageSwitcher />
           <ThemeToggle />
           {user && (
             <Link
               to="/favourites"
               aria-label="Saved items"
-              title="Saved"
+              title={t("nav.saved")}
               className="relative flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink-700/75 transition hover:border-signal-500 hover:text-signal-500"
             >
               <Heart className="h-4 w-4" />
@@ -93,16 +97,16 @@ export default function Navbar() {
                 <User className="mr-1.5 h-4 w-4" /> {user.name.split(" ")[0]}
               </Link>
               <button onClick={logout} className="text-sm text-ink-700/75 hover:text-ink-900">
-                Log out
+                {t("nav.logout")}
               </button>
             </div>
           ) : (
             <div className="flex items-center gap-3">
               <Link to="/login" className="text-sm font-medium text-ink-900 hover:text-signal-500">
-                Log in
+                {t("nav.login")}
               </Link>
               <Link to="/register" className="btn-primary">
-                Join KAITO
+                {t("nav.join")}
               </Link>
             </div>
           )}
@@ -110,6 +114,7 @@ export default function Navbar() {
 
         {/* Mobile toggles */}
         <div className="ml-auto flex items-center gap-2 md:hidden">
+          <LanguageSwitcher />
           <ThemeToggle />
           <CartBadge />
           <button onClick={() => setOpen((v) => !v)} aria-label="Toggle menu">
@@ -126,27 +131,27 @@ export default function Navbar() {
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Search KAITO..."
+              placeholder={t("nav.searchPlaceholderShort")}
               className="input pl-9"
             />
           </form>
           <div className="flex flex-col gap-3 text-sm font-medium">
-            <Link to="/digital-products" onClick={() => setOpen(false)}>Digital Products</Link>
-            <Link to="/made-to-order" onClick={() => setOpen(false)}>Made-to-Order</Link>
-            <Link to="/services" onClick={() => setOpen(false)}>Services</Link>
-            <Link to="/remote-work" onClick={() => setOpen(false)}>Remote Work</Link>
-            <Link to="/talent" onClick={() => setOpen(false)}>Hire Talent</Link>
+            <Link to="/digital-products" onClick={() => setOpen(false)}>{t("nav.digitalProducts")}</Link>
+            <Link to="/made-to-order" onClick={() => setOpen(false)}>{t("nav.madeToOrder")}</Link>
+            <Link to="/services" onClick={() => setOpen(false)}>{t("nav.services")}</Link>
+            <Link to="/remote-work" onClick={() => setOpen(false)}>{t("nav.remoteWork")}</Link>
+            <Link to="/talent" onClick={() => setOpen(false)}>{t("nav.hireTalent")}</Link>
             <hr className="border-line" />
             {user ? (
               <>
                 <Link to={dashboardPathFor(user.role)} onClick={() => setOpen(false)}>Dashboard</Link>
-                <Link to="/favourites" onClick={() => setOpen(false)}>Saved</Link>
-                <button onClick={logout} className="text-left text-ink-700/75">Log out</button>
+                <Link to="/favourites" onClick={() => setOpen(false)}>{t("nav.saved")}</Link>
+                <button onClick={logout} className="text-left text-ink-700/75">{t("nav.logout")}</button>
               </>
             ) : (
               <>
-                <Link to="/login" onClick={() => setOpen(false)}>Log in</Link>
-                <Link to="/register" className="btn-primary w-fit" onClick={() => setOpen(false)}>Join KAITO</Link>
+                <Link to="/login" onClick={() => setOpen(false)}>{t("nav.login")}</Link>
+                <Link to="/register" className="btn-primary w-fit" onClick={() => setOpen(false)}>{t("nav.join")}</Link>
               </>
             )}
           </div>

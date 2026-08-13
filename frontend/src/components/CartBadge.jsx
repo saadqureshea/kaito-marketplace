@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "../context/CartContext.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function CartBadge({ className = "" }) {
   const { count, lastAddedAt } = useCart();
+  const { t } = useLanguage();
   const [bump, setBump] = useState(false);
 
   // Re-trigger on every add, including adding the same item twice, which is
@@ -19,7 +21,7 @@ export default function CartBadge({ className = "" }) {
   return (
     <Link
       to="/cart"
-      aria-label={count ? `Cart, ${count} item${count === 1 ? "" : "s"}` : "Cart, empty"}
+      aria-label={count ? `Cart, ${count} item${count === 1 ? "" : "s"}` : t("cart.empty")}
       className={`relative flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink-700/75 transition hover:border-signal-500 hover:text-signal-500 ${className}`}
     >
       <ShoppingCart className="h-4 w-4" />

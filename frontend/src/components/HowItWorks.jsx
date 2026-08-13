@@ -1,37 +1,28 @@
 import { Link } from "react-router-dom";
-
-const STEPS = [
-  {
-    n: "01",
-    title: "Create your account",
-    body: "Join as a buyer, seller, worker, or employer. Sellers and workers submit a profile for review so buyers know who they're dealing with.",
-  },
-  {
-    n: "02",
-    title: "Get approved, then publish",
-    body: "Listings and job posts start in review. Once an admin approves them they appear in the public marketplace — nothing goes live unchecked.",
-  },
-  {
-    n: "03",
-    title: "Sell, deliver, get paid",
-    body: "Buyers pay securely at checkout. The 15% + 5% commission is calculated up front, and the remaining 80% is released to the seller on completion.",
-  },
-];
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function HowItWorks() {
+  const { t } = useLanguage();
+
+  const steps = [
+    { n: "01", title: t("howItWorks.step1Title"), body: t("howItWorks.step1Body") },
+    { n: "02", title: t("howItWorks.step2Title"), body: t("howItWorks.step2Body") },
+    { n: "03", title: t("howItWorks.step3Title"), body: t("howItWorks.step3Body") },
+  ];
+
   return (
     <section className="border-t border-line bg-paper-50">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <p className="text-xs font-semibold uppercase tracking-wider text-signal-500">How it works</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-signal-500">{t("howItWorks.eyebrow")}</p>
         <h2 className="mt-2 font-display text-2xl font-semibold sm:text-3xl">
-          Built around review, not just listings
+          {t("howItWorks.title")}
         </h2>
         <p className="mt-2 max-w-2xl text-ink-700/70">
-          Four roles, one account, and an approval step that keeps the marketplace credible.
+          {t("howItWorks.subtitle")}
         </p>
 
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {STEPS.map((s) => (
+          {steps.map((s) => (
             <div key={s.n} className="card relative p-6">
               <span className="font-display text-3xl font-semibold text-signal-500/25">{s.n}</span>
               <h3 className="mt-2 font-display text-lg font-semibold text-ink-950">{s.title}</h3>
@@ -42,10 +33,10 @@ export default function HowItWorks() {
 
         <div className="mt-8 flex flex-wrap gap-3">
           <Link to="/register?role=seller" className="btn-primary">
-            Start selling
+            {t("howItWorks.startSelling")}
           </Link>
           <Link to="/register?role=worker" className="btn-secondary">
-            Create a worker profile
+            {t("howItWorks.createWorkerProfile")}
           </Link>
         </div>
       </div>

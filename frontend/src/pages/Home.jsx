@@ -10,6 +10,7 @@ import JobCard from "../components/JobCard.jsx";
 import ProductRow from "../components/ProductRow.jsx";
 import TalentCard from "../components/TalentCard.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 import api from "../api/axios.js";
 
 function EmptyState({ children }) {
@@ -39,6 +40,7 @@ function CardGridSkeleton({ count = 4 }) {
 
 export default function Home() {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [products, setProducts] = useState(null);
   const [services, setServices] = useState(null);
   const [jobs, setJobs] = useState(null);
@@ -77,9 +79,9 @@ export default function Home() {
         <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
           <ProductRow
             endpoint="/products/mine/recommended"
-            eyebrow="For you"
-            title="Recommended for you"
-            subtitle="Based on what you've bought before."
+            eyebrow={t("home.recommendedEyebrow")}
+            title={t("home.recommendedTitle")}
+            subtitle={t("home.recommendedSubtitle")}
           />
         </section>
       )}
@@ -87,17 +89,15 @@ export default function Home() {
       {/* Products */}
       <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
         <SectionHeader
-          eyebrow="Marketplace"
-          title="More on the marketplace"
-          subtitle="Digital downloads and made-to-order pieces from approved sellers."
+          eyebrow={t("home.marketplaceEyebrow")}
+          title={t("home.marketplaceTitle")}
+          subtitle={t("home.marketplaceSubtitle")}
           to="/digital-products"
         />
         {gridProducts === null ? (
           <CardGridSkeleton />
         ) : gridProducts.length === 0 ? (
-          <EmptyState>
-            No further listings yet — approved products appear here as sellers publish them.
-          </EmptyState>
+          <EmptyState>{t("home.noMoreProducts")}</EmptyState>
         ) : (
           <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
             {gridProducts.map((p, i) => (
@@ -113,15 +113,15 @@ export default function Home() {
       <section className="border-t border-line bg-paper-50">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <SectionHeader
-            eyebrow="Professional services"
-            title="Hire a specialist"
-            subtitle="Tiered packages with fixed scope and delivery times."
+            eyebrow={t("home.servicesEyebrow")}
+            title={t("home.servicesTitle")}
+            subtitle={t("home.servicesSubtitle")}
             to="/services"
           />
           {services === null ? (
             <CardGridSkeleton />
           ) : services.length === 0 ? (
-            <EmptyState>No services listed yet.</EmptyState>
+            <EmptyState>{t("home.noServices")}</EmptyState>
           ) : (
             <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
               {services.map((s, i) => (
@@ -137,11 +137,11 @@ export default function Home() {
       {/* Jobs */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <SectionHeader
-          eyebrow="Remote work"
-          title="Open positions"
-          subtitle="Roles from employers hiring across the KAITO network."
+          eyebrow={t("home.jobsEyebrow")}
+          title={t("home.jobsTitle")}
+          subtitle={t("home.jobsSubtitle")}
           to="/remote-work"
-          linkLabel="Browse all jobs"
+          linkLabel={t("home.browseAllJobs")}
         />
         {jobs === null ? (
           <div className="flex flex-col gap-3">
@@ -150,7 +150,7 @@ export default function Home() {
             ))}
           </div>
         ) : jobs.length === 0 ? (
-          <EmptyState>No open roles right now — check back soon.</EmptyState>
+          <EmptyState>{t("home.noJobs")}</EmptyState>
         ) : (
           <div className="flex flex-col gap-3">
             {jobs.map((j, i) => (
@@ -167,11 +167,11 @@ export default function Home() {
         <section className="border-t border-line bg-paper-50">
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
             <SectionHeader
-              eyebrow="Verified professionals"
-              title="Hire remote talent"
-              subtitle="Profiles reviewed by our team before they go live."
+              eyebrow={t("home.talentEyebrow")}
+              title={t("home.talentTitle")}
+              subtitle={t("home.talentSubtitle")}
               to="/talent"
-              linkLabel="Browse all talent"
+              linkLabel={t("home.browseAllTalent")}
             />
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {talent.map((w, i) => (

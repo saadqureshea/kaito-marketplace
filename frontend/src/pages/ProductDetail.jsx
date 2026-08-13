@@ -4,6 +4,7 @@ import { Star } from "lucide-react";
 import api from "../api/axios.js";
 import { assetUrl } from "../utils/url.js";
 import { useAuth } from "../context/AuthContext.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 import ReviewList from "../components/ReviewList.jsx";
 import AddToCartButton from "../components/AddToCartButton.jsx";
 import VerifiedMark from "../components/VerifiedMark.jsx";
@@ -12,6 +13,7 @@ import ProductRow from "../components/ProductRow.jsx";
 export default function ProductDetail() {
   const { id } = useParams();
   const { user } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [activeImage, setActiveImage] = useState(0);
@@ -98,7 +100,7 @@ export default function ProductDetail() {
 
           <div className="mt-6 flex flex-wrap gap-3">
             <button onClick={buyNow} className="press btn-primary">
-              Buy now
+              {t("actions.buyNow")}
             </button>
             <AddToCartButton
               variant="full"
@@ -154,7 +156,7 @@ export default function ProductDetail() {
 
       <p className="mt-10">
         <Link to="/digital-products" className="text-sm text-signal-500 hover:underline">
-          &larr; Back to browsing
+          &larr; {t("actions.backToBrowsing")}
         </Link>
       </p>
     </div>

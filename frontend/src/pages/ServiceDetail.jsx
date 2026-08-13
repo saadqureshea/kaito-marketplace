@@ -4,6 +4,7 @@ import { Star, Check } from "lucide-react";
 import api from "../api/axios.js";
 import { assetUrl } from "../utils/url.js";
 import { useAuth } from "../context/AuthContext.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 import ReviewList from "../components/ReviewList.jsx";
 import AddToCartButton from "../components/AddToCartButton.jsx";
 import VerifiedMark from "../components/VerifiedMark.jsx";
@@ -11,6 +12,7 @@ import VerifiedMark from "../components/VerifiedMark.jsx";
 export default function ServiceDetail() {
   const { id } = useParams();
   const { user } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [service, setService] = useState(null);
   const [selectedPkg, setSelectedPkg] = useState(null);
@@ -117,7 +119,7 @@ export default function ServiceDetail() {
             </ul>
 
             <button onClick={buyNow} className="press btn-primary mt-6 w-full">
-              Continue (${pkg.price.toFixed(2)})
+              {t("actions.continue")} (${pkg.price.toFixed(2)})
             </button>
             <AddToCartButton
               variant="full"
@@ -138,7 +140,7 @@ export default function ServiceDetail() {
 
       <p className="mt-10">
         <Link to="/services" className="text-sm text-signal-500 hover:underline">
-          &larr; Back to browsing
+          &larr; {t("actions.backToBrowsing")}
         </Link>
       </p>
     </div>

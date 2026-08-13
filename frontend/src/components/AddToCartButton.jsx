@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ShoppingCart, Check } from "lucide-react";
 import { useCart } from "../context/CartContext.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 /**
  * Adding from a card means clicking inside a Link, so the click has to be
@@ -8,13 +9,14 @@ import { useCart } from "../context/CartContext.jsx";
  */
 export default function AddToCartButton({ item, variant = "icon", className = "" }) {
   const { add, has } = useCart();
+  const { t } = useLanguage();
   const [justAdded, setJustAdded] = useState(false);
   const inCart = has(item);
 
   useEffect(() => {
     if (!justAdded) return;
-    const t = setTimeout(() => setJustAdded(false), 1600);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => setJustAdded(false), 1600);
+    return () => clearTimeout(timer);
   }, [justAdded]);
 
   const handle = (e) => {
@@ -24,7 +26,7 @@ export default function AddToCartButton({ item, variant = "icon", className = ""
     setJustAdded(true);
   };
 
-  const label = justAdded ? "Added to cart" : inCart ? "Add another" : "Add to cart";
+  const label = justAdded ? t("actions.addedToCart") : inCart ? t("actions.addAnother") : t("actions.addToCart");
 
   if (variant === "icon") {
     return (

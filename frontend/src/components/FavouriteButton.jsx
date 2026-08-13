@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Heart } from "lucide-react";
 import { useFavourites } from "../context/FavouritesContext.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 /**
  * Hearts usually sit inside a card that is itself a link, so the click has to
@@ -9,6 +10,7 @@ import { useFavourites } from "../context/FavouritesContext.jsx";
  */
 export default function FavouriteButton({ itemType, itemId, className = "", floating = false }) {
   const { isFavourite, toggle } = useFavourites();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const saved = isFavourite(itemType, itemId);
@@ -31,8 +33,8 @@ export default function FavouriteButton({ itemType, itemId, className = "", floa
       type="button"
       onClick={handle}
       aria-pressed={saved}
-      aria-label={saved ? "Remove from favourites" : "Save to favourites"}
-      title={error || (saved ? "Saved" : "Save")}
+      aria-label={saved ? t("actions.removeFromFavourites") : t("actions.saveToFavourites")}
+      title={error || (saved ? t("actions.saved") : t("actions.save"))}
       className={`press z-10 flex shrink-0 items-center justify-center rounded-full transition hover:border-signal-500 ${base} ${
         saved ? "text-red-500" : "text-ink-700/70 hover:text-signal-500"
       } ${className}`}

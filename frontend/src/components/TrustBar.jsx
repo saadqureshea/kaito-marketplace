@@ -1,33 +1,20 @@
 import { ShieldCheck, Lock, Wallet, BadgeCheck } from "lucide-react";
-
-const ITEMS = [
-  {
-    icon: ShieldCheck,
-    label: "Admin-reviewed listings",
-    detail: "Every listing is approved before it goes live",
-  },
-  {
-    icon: Lock,
-    label: "Payment held in escrow",
-    detail: "Released to the seller only once you confirm receipt",
-  },
-  {
-    icon: Wallet,
-    label: "No joining or listing fees",
-    detail: "Commission only on completed sales — sellers keep 80%",
-  },
-  {
-    icon: BadgeCheck,
-    label: "Verified sellers & freelancers",
-    detail: "Profiles vetted by our team before they appear",
-  },
-];
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function TrustBar() {
+  const { t } = useLanguage();
+
+  const items = [
+    { icon: ShieldCheck, label: t("trust.item1Label"), detail: t("trust.item1Detail") },
+    { icon: Lock, label: t("trust.item2Label"), detail: t("trust.item2Detail") },
+    { icon: Wallet, label: t("trust.item3Label"), detail: t("trust.item3Detail") },
+    { icon: BadgeCheck, label: t("trust.item4Label"), detail: t("trust.item4Detail") },
+  ];
+
   return (
     <section className="border-b border-line bg-paper-50">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-8 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
-        {ITEMS.map(({ icon: Icon, label, detail }) => (
+        {items.map(({ icon: Icon, label, detail }) => (
           <div key={label} className="flex items-start gap-3">
             <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-signal-500/10 text-signal-500">
               <Icon className="h-4 w-4" />
