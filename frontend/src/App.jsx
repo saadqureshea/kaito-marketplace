@@ -16,6 +16,10 @@ import JobDetail from "./pages/JobDetail.jsx";
 import Talent from "./pages/Talent.jsx";
 import TalentDetail from "./pages/TalentDetail.jsx";
 import SellerStorefront from "./pages/SellerStorefront.jsx";
+import About from "./pages/About.jsx";
+import Pricing from "./pages/Pricing.jsx";
+import Help from "./pages/Help.jsx";
+import Contact from "./pages/Contact.jsx";
 import BuyerDashboard from "./pages/Dashboard/BuyerDashboard.jsx";
 import SellerDashboard from "./pages/Dashboard/SellerDashboard.jsx";
 import WorkerDashboard from "./pages/Dashboard/WorkerDashboard.jsx";
@@ -60,6 +64,10 @@ export default function App() {
           <Route path="/talent" element={<Talent />} />
           <Route path="/talent/:id" element={<TalentDetail />} />
           <Route path="/sellers/:id" element={<SellerStorefront />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/contact" element={<Contact />} />
 
           <Route
             path="/dashboard/buyer"

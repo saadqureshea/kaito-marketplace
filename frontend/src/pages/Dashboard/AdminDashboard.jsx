@@ -13,6 +13,7 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
   const [pendingProducts, setPendingProducts] = useState([]);
   const [disputes, setDisputes] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [note, setNote] = useState({});
   const [busy, setBusy] = useState(null);
   const [error, setError] = useState("");
@@ -21,6 +22,7 @@ export default function AdminDashboard() {
     api.get("/admin/stats").then(({ data }) => setStats(data));
     api.get("/admin/products/pending").then(({ data }) => setPendingProducts(data));
     api.get("/admin/disputes").then(({ data }) => setDisputes(data)).catch(() => setDisputes([]));
+    api.get("/contact").then(({ data }) => setMessages(data)).catch(() => setMessages([]));
   };
 
   useEffect(load, []);
@@ -32,6 +34,11 @@ export default function AdminDashboard() {
   const reject = async (id) => {
     await api.put(`/admin/products/${id}/reject`, { reason: "Does not meet guidelines" });
     load();
+  };
+
+  const dismissMessage = async (id) => {
+    await api.delete(`/contact/${id}`);
+    setMessages((prev) => prev.filter((m) => m._id !== id));
   };
 
   const resolve = async (orderId, resolution) => {
@@ -120,6 +127,34 @@ export default function AdminDashboard() {
                   </button>
                 ))}
               </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Contact messages */}
+      <h2 className="mb-3 font-display text-lg font-semibold">Contact messages</h2>
+      <div className="mb-8 card divide-y divide-line">
+        {messages.length === 0 ? (
+          <p className="p-6 text-sm text-ink-700/75">No messages yet.</p>
+        ) : (
+          messages.map((m) => (
+            <div key={m._id} className="p-4 text-sm">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="font-medium text-ink-950">{m.subject}</p>
+                  <p className="mt-0.5 text-xs text-ink-700/75">
+                    {m.name} &lt;{m.email}&gt; · {timeAgo(m.createdAt)}
+                  </p>
+                </div>
+                <button
+                  onClick={() => dismissMessage(m._id)}
+                  className="press btn-secondary !px-3 !py-1.5 text-xs"
+                >
+                  Dismiss
+                </button>
+              </div>
+              <p className="mt-2 whitespace-pre-line text-xs text-ink-700/85">{m.message}</p>
             </div>
           ))
         )}
