@@ -13,8 +13,8 @@ const QUICK_LINKS = [
 
 const ASSURANCES = [
   { icon: ShieldCheck, label: "Admin-reviewed listings" },
-  { icon: Lock, label: "Secure checkout" },
-  { icon: BadgeCheck, label: "80% to sellers" },
+  { icon: Lock, label: "Payment held until you confirm" },
+  { icon: BadgeCheck, label: "No listing fees" },
 ];
 
 function CardSkeleton() {
@@ -67,7 +67,8 @@ export default function Hero({ products }) {
 
           <p className="mt-4 max-w-xl text-base text-ink-700/75">
             Buy templates, code and custom-made pieces, hire specialists, or start selling
-            your own — with a transparent 80% payout on every sale.
+            your own. No joining fee and no listing fee — commission is only charged when
+            something sells, and sellers keep 80%.
           </p>
 
           <form onSubmit={submit} className="mt-6 flex gap-2">

@@ -4,6 +4,7 @@ import Badge from "./Badge.jsx";
 import Rating from "./Rating.jsx";
 import AddToCartButton from "./AddToCartButton.jsx";
 import VerifiedMark from "./VerifiedMark.jsx";
+import FavouriteButton from "./FavouriteButton.jsx";
 import { assetUrl } from "../utils/url.js";
 import { money, compact, titleize } from "../utils/format.js";
 
@@ -40,12 +41,14 @@ export default function ServiceCard({ item }) {
           </div>
         )}
         {tiers.length > 1 && (
-          <div className="absolute right-2.5 top-2.5">
+          <div className="absolute bottom-2.5 left-2.5">
             <Badge tone="neutral" className="bg-surface/90 backdrop-blur-sm">
               <Layers className="mr-1 h-2.5 w-2.5" /> {tiers.length} tiers
             </Badge>
           </div>
         )}
+
+        <FavouriteButton floating itemType="service" itemId={item._id} />
       </div>
 
       <div className="flex flex-1 flex-col p-4">

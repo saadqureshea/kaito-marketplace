@@ -40,6 +40,17 @@ const userSchema = new mongoose.Schema(
       cvUrl: { type: String, default: "" },
       portfolioUrl: { type: String, default: "" },
       yearsExperience: { type: Number, default: 0 },
+
+      // Remote work runs across time zones, so an employer's first question
+      // is usually when someone is reachable, not just what they can do.
+      timezone: { type: String, default: "" }, // e.g. "PKT (UTC+5)"
+      availability: {
+        type: String,
+        enum: ["", "full_time", "part_time", "contract", "unavailable"],
+        default: "",
+      },
+      languages: [{ type: String }],
+
       approvalStatus: {
         type: String,
         enum: ["not_submitted", "pending", "approved", "rejected"],

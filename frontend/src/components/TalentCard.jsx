@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
-import { MapPin, Briefcase } from "lucide-react";
+import { MapPin, Briefcase, Clock } from "lucide-react";
+import AvailabilityPill from "./AvailabilityPill.jsx";
+import FavouriteButton from "./FavouriteButton.jsx";
 import { assetUrl } from "../utils/url.js";
 import { money } from "../utils/format.js";
 
@@ -39,9 +41,12 @@ export default function TalentCard({ worker }) {
         )}
 
         <div className="min-w-0 flex-1">
-          <h3 className="truncate font-display text-base font-semibold text-ink-950 group-hover:text-signal-600">
-            {worker.name}
-          </h3>
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="truncate font-display text-base font-semibold text-ink-950 group-hover:text-signal-600">
+              {worker.name}
+            </h3>
+            <FavouriteButton itemType="talent" itemId={worker._id} />
+          </div>
           {p.headline && (
             <p className="mt-0.5 line-clamp-2 text-xs leading-relaxed text-ink-700/75">{p.headline}</p>
           )}
@@ -61,7 +66,19 @@ export default function TalentCard({ worker }) {
             {p.yearsExperience} yr{p.yearsExperience === 1 ? "" : "s"}
           </span>
         )}
+        {p.timezone && (
+          <span className="inline-flex items-center gap-1">
+            <Clock className="h-3 w-3" />
+            {p.timezone}
+          </span>
+        )}
       </div>
+
+      {p.availability && (
+        <span className="mt-2 w-fit">
+          <AvailabilityPill value={p.availability} />
+        </span>
+      )}
 
       {skills.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-1.5">

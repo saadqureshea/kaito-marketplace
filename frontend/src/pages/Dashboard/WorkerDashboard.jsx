@@ -71,6 +71,38 @@ export default function WorkerDashboard() {
             />
           </div>
 
+          <div className="grid grid-cols-2 gap-3">
+            <input
+              className="input"
+              placeholder="Time zone (e.g. PKT UTC+5)"
+              value={profile.timezone || ""}
+              onChange={(e) => setProfile({ ...profile, timezone: e.target.value })}
+            />
+            <select
+              className="input"
+              value={profile.availability || ""}
+              onChange={(e) => setProfile({ ...profile, availability: e.target.value })}
+            >
+              <option value="">Availability…</option>
+              <option value="full_time">Available full-time</option>
+              <option value="part_time">Available part-time</option>
+              <option value="contract">Open to contract</option>
+              <option value="unavailable">Not taking work</option>
+            </select>
+          </div>
+
+          <input
+            className="input"
+            placeholder="Languages, comma separated (e.g. English, Urdu)"
+            value={Array.isArray(profile.languages) ? profile.languages.join(", ") : profile.languages || ""}
+            onChange={(e) =>
+              setProfile({
+                ...profile,
+                languages: e.target.value.split(",").map((s) => s.trim()).filter(Boolean),
+              })
+            }
+          />
+
           <div>
             <label className="mb-1 block text-sm font-medium">CV</label>
             <FileUpload

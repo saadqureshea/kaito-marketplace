@@ -23,6 +23,7 @@ export default function Talent() {
 
   const keyword = searchParams.get("q") || "";
   const skill = searchParams.get("skill") || "";
+  const availability = searchParams.get("availability") || "";
   const sort = searchParams.get("sort") || "newest";
   const page = Math.max(1, Number(searchParams.get("page")) || 1);
 
@@ -47,6 +48,7 @@ export default function Talent() {
         params: {
           keyword: keyword || undefined,
           skill: skill || undefined,
+          availability: availability || undefined,
           sort: sort !== "newest" ? sort : undefined,
           page,
           limit: PER_PAGE,
@@ -66,9 +68,9 @@ export default function Talent() {
     return () => {
       cancelled = true;
     };
-  }, [keyword, skill, sort, page]);
+  }, [keyword, skill, availability, sort, page]);
 
-  const filtersActive = Boolean(keyword || skill);
+  const filtersActive = Boolean(keyword || skill || availability);
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -100,6 +102,20 @@ export default function Talent() {
             aria-label="Search talent"
             className="input !w-56 !py-1.5 text-xs"
           />
+          <label className="flex items-center gap-2 text-xs text-ink-700/75">
+            <span className="hidden sm:inline">Availability</span>
+            <select
+              value={availability}
+              onChange={(e) => updateParams({ availability: e.target.value, page: 1 })}
+              className="input !w-auto !py-1.5 text-xs"
+            >
+              <option value="">Any availability</option>
+              <option value="full_time">Full-time</option>
+              <option value="part_time">Part-time</option>
+              <option value="contract">Contract</option>
+            </select>
+          </label>
+
           <label className="flex items-center gap-2 text-xs text-ink-700/75">
             <span className="hidden sm:inline">Sort</span>
             <select
@@ -135,7 +151,9 @@ export default function Talent() {
           ))}
           {filtersActive && (
             <button
-              onClick={() => updateParams({ q: undefined, skill: undefined, page: 1 })}
+              onClick={() =>
+                updateParams({ q: undefined, skill: undefined, availability: undefined, page: 1 })
+              }
               className="press inline-flex items-center gap-1 px-2 py-1 text-xs text-ink-700/75 hover:text-signal-500"
             >
               <X className="h-3 w-3" />
@@ -160,7 +178,9 @@ export default function Talent() {
           </p>
           {filtersActive && (
             <button
-              onClick={() => updateParams({ q: undefined, skill: undefined, page: 1 })}
+              onClick={() =>
+                updateParams({ q: undefined, skill: undefined, availability: undefined, page: 1 })
+              }
               className="press btn-secondary mt-4"
             >
               Clear filters

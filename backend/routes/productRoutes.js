@@ -39,6 +39,39 @@ router.get(
 );
 
 /**
+ * @route GET /api/products/categories
+ * Categories that actually have approved stock behind them, with counts, so
+ * the homepage advertises real inventory rather than a hardcoded list that
+ * can lead somewhere empty.
+ */
+router.get(
+  "/categories",
+  asyncHandler(async (req, res) => {
+    const rows = await Product.aggregate([
+      { $match: { status: "approved" } },
+      { $group: { _id: { category: "$category", listingType: "$listingType" }, count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+    ]);
+
+    // Collapse to one entry per category, keeping the listing type it mostly
+    // belongs to so a chip can link into the right section.
+    const byCategory = new Map();
+    for (const r of rows) {
+      const name = r._id.category;
+      if (!name) continue;
+      const existing = byCategory.get(name);
+      if (existing) {
+        existing.count += r.count;
+      } else {
+        byCategory.set(name, { name, count: r.count, listingType: r._id.listingType });
+      }
+    }
+
+    res.json([...byCategory.values()].sort((a, b) => b.count - a.count));
+  })
+);
+
+/**
  * @route GET /api/products/:id/related
  * Content-based "you may also like": same category or overlapping tags,
  * ranked by rating then sales. Deliberately not collaborative filtering -

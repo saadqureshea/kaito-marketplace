@@ -22,6 +22,9 @@ const jobSchema = new mongoose.Schema(
 
     isRemote: { type: Boolean, default: true },
     location: { type: String, default: "Remote" },
+    // Free text rather than an enum: "US overlap", "Europe time zones" and
+    // "Worldwide" are all things employers genuinely mean here.
+    timezoneRequirement: { type: String, default: "" },
 
     status: {
       type: String,

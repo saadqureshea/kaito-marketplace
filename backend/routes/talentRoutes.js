@@ -23,6 +23,9 @@ const PUBLIC_FIELDS = [
   "professionalProfile.hourlyRate",
   "professionalProfile.portfolioUrl",
   "professionalProfile.yearsExperience",
+  "professionalProfile.timezone",
+  "professionalProfile.availability",
+  "professionalProfile.languages",
 ].join(" ");
 
 const SORTS = {
@@ -44,7 +47,7 @@ const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 router.get(
   "/",
   asyncHandler(async (req, res) => {
-    const { keyword, skill, minRate, maxRate, sort, page = 1, limit = 12 } = req.query;
+    const { keyword, skill, availability, minRate, maxRate, sort, page = 1, limit = 12 } = req.query;
 
     const query = {
       role: "worker",
@@ -53,6 +56,10 @@ router.get(
     };
 
     if (skill) query["professionalProfile.skills"] = new RegExp(`^${escapeRegex(skill)}$`, "i");
+
+    if (availability && availability !== "any") {
+      query["professionalProfile.availability"] = availability;
+    }
 
     if (keyword) {
       const rx = new RegExp(escapeRegex(keyword), "i");

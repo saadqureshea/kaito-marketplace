@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Search, Menu, X, User } from "lucide-react";
+import { Search, Menu, X, User, Heart } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
+import { useFavourites } from "../context/FavouritesContext.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
 import CartBadge from "./CartBadge.jsx";
 
@@ -16,6 +17,7 @@ const dashboardPathFor = (role) =>
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const { count: favouriteCount } = useFavourites();
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const navigate = useNavigate();
@@ -68,6 +70,21 @@ export default function Navbar() {
           </Link>
 
           <ThemeToggle />
+          {user && (
+            <Link
+              to="/favourites"
+              aria-label="Saved items"
+              title="Saved"
+              className="relative flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink-700/75 transition hover:border-signal-500 hover:text-signal-500"
+            >
+              <Heart className="h-4 w-4" />
+              {favouriteCount > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-[1.125rem] min-w-[1.125rem] items-center justify-center rounded-full bg-signal-500 px-1 text-[10px] font-semibold leading-none text-on-brand">
+                  {favouriteCount > 99 ? "99+" : favouriteCount}
+                </span>
+              )}
+            </Link>
+          )}
           <CartBadge />
 
           {user ? (
@@ -123,6 +140,7 @@ export default function Navbar() {
             {user ? (
               <>
                 <Link to={dashboardPathFor(user.role)} onClick={() => setOpen(false)}>Dashboard</Link>
+                <Link to="/favourites" onClick={() => setOpen(false)}>Saved</Link>
                 <button onClick={logout} className="text-left text-ink-700/75">Log out</button>
               </>
             ) : (

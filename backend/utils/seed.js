@@ -46,6 +46,43 @@ const users = [
       isVerifiedSeller: true,
     },
   },
+  {
+    name: "Karachi Craft House",
+    email: "karachi@kaito.dev",
+    role: "seller",
+    country: "Pakistan",
+    sellerProfile: {
+      storeName: "Karachi Craft House",
+      storeDescription: "Hand-finished leather, khussa and traditional wear, made to order.",
+      payoutEmail: "karachi-sandbox@business.example.com",
+      isVerifiedSeller: true,
+    },
+  },
+  {
+    name: "Lahore Atelier",
+    email: "lahore@kaito.dev",
+    role: "seller",
+    country: "Pakistan",
+    sellerProfile: {
+      storeName: "Lahore Atelier",
+      storeDescription: "Embroidery, ajrak prints and handmade jewellery.",
+      payoutEmail: "lahore-sandbox@business.example.com",
+      isVerifiedSeller: true,
+    },
+  },
+  {
+    name: "PixelForge Studio",
+    email: "pixelforge@kaito.dev",
+    role: "seller",
+    country: "United Kingdom",
+    sellerProfile: {
+      storeName: "PixelForge Studio",
+      storeDescription: "Interface kits, templates and brand systems for product teams.",
+      payoutEmail: "pixelforge-sandbox@business.example.com",
+      isVerifiedSeller: false,
+    },
+  },
+
   { name: "Beau Buyer", email: "buyer@kaito.dev", role: "buyer" },
   {
     name: "Wren Worker",
@@ -55,6 +92,9 @@ const users = [
       headline: "Full-Stack Developer",
       skills: ["React", "Node.js", "MongoDB"],
       hourlyRate: 45,
+      timezone: "PKT (UTC+5)",
+      availability: "full_time",
+      languages: ["English", "Urdu"],
       portfolioUrl: "https://example.com/wren",
       yearsExperience: 4,
       approvalStatus: "approved",
@@ -73,6 +113,9 @@ const users = [
       headline: "Backend & API Engineer",
       skills: ["Node.js", "PostgreSQL", "AWS", "Stripe"],
       hourlyRate: 38,
+      timezone: "PKT (UTC+5)",
+      availability: "contract",
+      languages: ["English", "Urdu"],
       portfolioUrl: "https://example.com/rafi",
       yearsExperience: 6,
       approvalStatus: "approved",
@@ -88,6 +131,9 @@ const users = [
       headline: "Product & UI/UX Designer",
       skills: ["Figma", "Design Systems", "Prototyping", "User Research"],
       hourlyRate: 52,
+      timezone: "KST (UTC+9)",
+      availability: "part_time",
+      languages: ["English", "Korean"],
       portfolioUrl: "https://example.com/mina",
       yearsExperience: 8,
       approvalStatus: "approved",
@@ -103,6 +149,9 @@ const users = [
       headline: "Video Editor & Motion Designer",
       skills: ["After Effects", "Premiere Pro", "Motion Graphics"],
       hourlyRate: 29,
+      timezone: "WET (UTC+0)",
+      availability: "full_time",
+      languages: ["English", "Portuguese"],
       portfolioUrl: "https://example.com/tomas",
       yearsExperience: 4,
       approvalStatus: "approved",
@@ -118,6 +167,9 @@ const users = [
       headline: "Technical Writer & Content Strategist",
       skills: ["Technical Writing", "SEO", "Documentation", "Content Strategy"],
       hourlyRate: 33,
+      timezone: "WAT (UTC+1)",
+      availability: "contract",
+      languages: ["English"],
       portfolioUrl: "https://example.com/aisha",
       yearsExperience: 5,
       approvalStatus: "approved",
@@ -133,6 +185,9 @@ const users = [
       headline: "AI & Automation Engineer",
       skills: ["Python", "LangChain", "RAG", "Node.js"],
       hourlyRate: 65,
+      timezone: "CET (UTC+1)",
+      availability: "part_time",
+      languages: ["English", "German"],
       portfolioUrl: "https://example.com/lucas",
       yearsExperience: 7,
       approvalStatus: "approved",
@@ -147,17 +202,179 @@ async function seedUsers() {
     if (!user) {
       user = await User.create({ ...u, password: DEMO_PASSWORD });
       console.log(`Created user: ${u.email} (${u.role})`);
+    } else if (u.professionalProfile) {
+      // Backfill profile fields added to this script after an earlier run,
+      // without overwriting anything already set on the account.
+      const patched = [];
+      for (const [k, v] of Object.entries(u.professionalProfile)) {
+        const current = user.professionalProfile?.[k];
+        const empty =
+          current === undefined ||
+          current === "" ||
+          current === 0 ||
+          (Array.isArray(current) && current.length === 0);
+        if (empty && v !== undefined && v !== "") {
+          user.professionalProfile[k] = v;
+          patched.push(k);
+        }
+      }
+      if (patched.length) {
+        await user.save();
+        console.log(`Backfilled ${patched.join(", ")} on: ${u.email}`);
+      }
     }
-    // seller/seller2 both map to "seller" key - keep the first, expose the
-    // second under its own key for clarity below
-    if (u.email === "seller2@kaito.dev") created.seller2 = user;
-    else created[u.role] = user;
+    // Keyed by email local-part so multiple sellers stay individually
+    // addressable, with the first of each role also available by role name.
+    created[u.email.split("@")[0]] = user;
+    if (!created[u.role]) created[u.role] = user;
   }
   return created;
 }
 
-function productCatalog(novaId, auroraId) {
+function productCatalog(novaId, auroraId, karachiId, lahoreId, pixelId) {
   return [
+    // --- Regional makers -------------------------------------------------
+    {
+      seller: karachiId,
+      title: "Hand-Embroidered Khussa — Made to Order",
+      description:
+        "Traditional khussa hand-stitched to your size, with a choice of thread colour and embroidery motif.",
+      listingType: "made_to_order",
+      category: "Shoes & Khussa",
+      tags: ["khussa", "handmade", "traditional"],
+      price: 42,
+      images: [pic("kaito-khussa-1"), pic("kaito-khussa-2")],
+      productionDetails: {
+        leadTimeDays: 12,
+        manufacturer: "Karachi Craft House",
+        customizationOptions: ["Size", "Thread Colour", "Motif"],
+      },
+      status: "approved",
+      rating: 4.9,
+      numReviews: 128,
+      totalSold: 264,
+    },
+    {
+      seller: karachiId,
+      title: "Camel Leather Handcrafted Wallet",
+      description: "Full-grain camel leather wallet, hand-stitched with optional initials embossing.",
+      listingType: "made_to_order",
+      category: "Custom Clothing & Leather",
+      tags: ["leather", "wallet", "custom"],
+      price: 35,
+      images: [pic("kaito-camelwallet-1")],
+      productionDetails: {
+        leadTimeDays: 10,
+        manufacturer: "Karachi Craft House",
+        customizationOptions: ["Leather Colour", "Initials"],
+      },
+      status: "approved",
+      rating: 4.7,
+      numReviews: 84,
+      totalSold: 151,
+    },
+    {
+      seller: lahoreId,
+      title: "Sindhi Ajrak Block-Print Shawl",
+      description:
+        "Hand block-printed ajrak shawl using traditional indigo and madder dyes, finished to order.",
+      listingType: "made_to_order",
+      category: "Home & Art",
+      tags: ["ajrak", "block print", "textile"],
+      price: 28,
+      images: [pic("kaito-ajrak-1"), pic("kaito-ajrak-2")],
+      productionDetails: {
+        leadTimeDays: 9,
+        manufacturer: "Lahore Atelier",
+        customizationOptions: ["Colourway", "Length"],
+      },
+      status: "approved",
+      rating: 4.8,
+      numReviews: 203,
+      totalSold: 411,
+    },
+    {
+      seller: lahoreId,
+      title: "Truck Art Hand-Painted Canvas 18×24\"",
+      description: "Hand-painted canvas in the Pakistani truck-art tradition, personalised on request.",
+      listingType: "made_to_order",
+      category: "Home & Art",
+      tags: ["truck art", "painting", "handmade"],
+      price: 55,
+      images: [pic("kaito-truckart-1")],
+      productionDetails: {
+        leadTimeDays: 15,
+        manufacturer: "Lahore Atelier",
+        customizationOptions: ["Text", "Colour Palette"],
+      },
+      status: "approved",
+      rating: 4.9,
+      numReviews: 61,
+      totalSold: 97,
+    },
+    {
+      seller: lahoreId,
+      title: "Silver Filigree Jhumka Earrings",
+      description: "Hand-worked sterling silver jhumkas, made to order with optional gemstone drops.",
+      listingType: "made_to_order",
+      category: "Jewellery",
+      tags: ["jewellery", "silver", "handmade"],
+      price: 48,
+      images: [pic("kaito-jhumka-1")],
+      productionDetails: {
+        leadTimeDays: 11,
+        manufacturer: "Lahore Atelier",
+        customizationOptions: ["Gemstone", "Drop Length"],
+      },
+      status: "approved",
+      rating: 4.8,
+      numReviews: 92,
+      totalSold: 176,
+    },
+    {
+      seller: pixelId,
+      title: "Dashboard UI Kit — 60 Screens for Figma",
+      description: "A complete analytics dashboard kit with components, charts and a documented system.",
+      listingType: "digital",
+      category: "Templates",
+      tags: ["figma", "dashboard", "ui kit"],
+      price: 29,
+      images: [pic("kaito-dashkit-1"), pic("kaito-dashkit-2")],
+      status: "approved",
+      rating: 5,
+      numReviews: 91,
+      totalSold: 233,
+    },
+    {
+      seller: pixelId,
+      title: "Complete Brand Identity & Logo Pack",
+      description: "Logo system, colour palettes, type pairings and brand guideline templates.",
+      listingType: "digital",
+      category: "Logos & Branding",
+      tags: ["branding", "logo", "identity"],
+      price: 18.5,
+      images: [pic("kaito-brandpack-1")],
+      status: "approved",
+      rating: 4.6,
+      numReviews: 254,
+      totalSold: 488,
+    },
+    {
+      seller: pixelId,
+      title: "Wedding Invitation Suite — Editable Cards",
+      description: "Editable invitation, RSVP and menu cards in Canva and Illustrator formats.",
+      listingType: "digital",
+      category: "Templates",
+      tags: ["wedding", "invitation", "canva"],
+      price: 9.5,
+      images: [pic("kaito-wedding-1")],
+      status: "approved",
+      rating: 4.6,
+      numReviews: 472,
+      totalSold: 903,
+    },
+
+    // --- Existing catalogue ----------------------------------------------
     {
       seller: novaId,
       title: "Minimalist Notion Dashboard Template",
@@ -558,8 +775,11 @@ async function seedJobs(catalog) {
 
 async function run() {
   await connectDB();
-  const { seller, seller2, employer } = await seedUsers();
-  await seedProducts(productCatalog(seller._id, seller2._id));
+  const users = await seedUsers();
+  const { seller, seller2, karachi, lahore, pixelforge, employer } = users;
+  await seedProducts(
+    productCatalog(seller._id, seller2._id, karachi._id, lahore._id, pixelforge._id)
+  );
   await seedServices(serviceCatalog(seller._id, seller2._id));
   await seedJobs(jobCatalog(employer._id));
   console.log(`\nDone. Demo accounts use password: ${DEMO_PASSWORD}`);

@@ -1,10 +1,26 @@
 import { ShieldCheck, Lock, Wallet, BadgeCheck } from "lucide-react";
 
 const ITEMS = [
-  { icon: ShieldCheck, label: "Admin-reviewed listings", detail: "Every listing is approved before it goes live" },
-  { icon: Lock, label: "Secure checkout", detail: "Card payments handled by Stripe" },
-  { icon: Wallet, label: "80% seller payout", detail: "Transparent split, shown before you buy" },
-  { icon: BadgeCheck, label: "Verified worker profiles", detail: "Professional profiles vetted by our team" },
+  {
+    icon: ShieldCheck,
+    label: "Admin-reviewed listings",
+    detail: "Every listing is approved before it goes live",
+  },
+  {
+    icon: Lock,
+    label: "Payment held in escrow",
+    detail: "Released to the seller only once you confirm receipt",
+  },
+  {
+    icon: Wallet,
+    label: "No joining or listing fees",
+    detail: "Commission only on completed sales — sellers keep 80%",
+  },
+  {
+    icon: BadgeCheck,
+    label: "Verified sellers & freelancers",
+    detail: "Profiles vetted by our team before they appear",
+  },
 ];
 
 export default function TrustBar() {

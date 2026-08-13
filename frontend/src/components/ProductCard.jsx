@@ -4,6 +4,7 @@ import Badge from "./Badge.jsx";
 import Rating from "./Rating.jsx";
 import AddToCartButton from "./AddToCartButton.jsx";
 import VerifiedMark from "./VerifiedMark.jsx";
+import FavouriteButton from "./FavouriteButton.jsx";
 import { assetUrl } from "../utils/url.js";
 import { isNew, money, compact } from "../utils/format.js";
 
@@ -44,11 +45,15 @@ export default function ProductCard({ item }) {
           ) : null}
         </div>
 
-        <div className="absolute right-2.5 top-2.5">
+        {/* Type badge moves to the foot of the image so the heart can own the
+            top-right corner, where people reach for it. */}
+        <div className="absolute bottom-2.5 left-2.5">
           <Badge tone="neutral" className="bg-surface/90 backdrop-blur-sm">
             {madeToOrder ? "Made-to-Order" : "Digital"}
           </Badge>
         </div>
+
+        <FavouriteButton floating itemType="product" itemId={item._id} />
       </div>
 
       <div className="flex flex-1 flex-col p-4">

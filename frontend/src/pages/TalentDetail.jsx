@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { MapPin, Briefcase, ExternalLink, ShieldCheck } from "lucide-react";
+import { MapPin, Briefcase, ExternalLink, ShieldCheck, Clock } from "lucide-react";
+import AvailabilityPill from "../components/AvailabilityPill.jsx";
 import api from "../api/axios.js";
 import { assetUrl } from "../utils/url.js";
 import { money } from "../utils/format.js";
@@ -65,10 +66,25 @@ export default function TalentDetail() {
                   {p.yearsExperience} year{p.yearsExperience === 1 ? "" : "s"} experience
                 </span>
               )}
+              {p.timezone && (
+                <span className="inline-flex items-center gap-1">
+                  <Clock className="h-3.5 w-3.5" />
+                  {p.timezone}
+                </span>
+              )}
               <span className="inline-flex items-center gap-1 text-signal-500">
                 <ShieldCheck className="h-3.5 w-3.5" />
                 Profile reviewed by KAITO
               </span>
+            </div>
+
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <AvailabilityPill value={p.availability} />
+              {p.languages?.length > 0 && (
+                <span className="text-xs text-ink-700/75">
+                  Speaks {p.languages.join(", ")}
+                </span>
+              )}
             </div>
           </div>
 
