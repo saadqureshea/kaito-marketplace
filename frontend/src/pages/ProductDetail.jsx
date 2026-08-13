@@ -72,7 +72,16 @@ export default function ProductDetail() {
           </span>
           <h1 className="mt-3 font-display text-2xl font-semibold text-ink-950">{product.title}</h1>
           <p className="mt-1 flex flex-wrap items-center gap-2 text-sm text-ink-700/75">
-            <span>by {product.seller?.sellerProfile?.storeName || product.seller?.name}</span>
+            <span>
+              by{" "}
+              {product.seller?._id ? (
+                <Link to={`/sellers/${product.seller._id}`} className="hover:text-signal-500 hover:underline">
+                  {product.seller?.sellerProfile?.storeName || product.seller?.name}
+                </Link>
+              ) : (
+                product.seller?.sellerProfile?.storeName || product.seller?.name
+              )}
+            </span>
             {product.seller?.sellerProfile?.isVerifiedSeller && <VerifiedMark withLabel />}
           </p>
 

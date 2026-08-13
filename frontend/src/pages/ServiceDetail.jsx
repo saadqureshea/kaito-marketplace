@@ -55,7 +55,16 @@ export default function ServiceDetail() {
           </span>
           <h1 className="mt-3 font-display text-2xl font-semibold text-ink-950">{service.title}</h1>
           <p className="mt-1 flex flex-wrap items-center gap-2 text-sm text-ink-700/75">
-            <span>by {service.seller?.sellerProfile?.storeName || service.seller?.name}</span>
+            <span>
+              by{" "}
+              {service.seller?._id ? (
+                <Link to={`/sellers/${service.seller._id}`} className="hover:text-signal-500 hover:underline">
+                  {service.seller?.sellerProfile?.storeName || service.seller?.name}
+                </Link>
+              ) : (
+                service.seller?.sellerProfile?.storeName || service.seller?.name
+              )}
+            </span>
             {service.seller?.sellerProfile?.isVerifiedSeller && <VerifiedMark withLabel />}
           </p>
 

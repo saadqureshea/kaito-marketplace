@@ -24,6 +24,7 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import talentRoutes from "./routes/talentRoutes.js";
 import favouriteRoutes from "./routes/favouriteRoutes.js";
+import sellerRoutes from "./routes/sellerRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 dotenv.config();
@@ -57,6 +58,7 @@ app.use("/api/uploads", uploadRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/talent", talentRoutes);
 app.use("/api/favourites", favouriteRoutes);
+app.use("/api/sellers", sellerRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
