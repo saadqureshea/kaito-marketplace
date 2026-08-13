@@ -4,12 +4,13 @@ const ThemeContext = createContext(null);
 const STORAGE_KEY = "kaito_theme";
 
 // Mirrors the inline script in index.html, which applies the same decision
-// before first paint so the page never flashes the wrong theme.
+// before first paint so the page never flashes the wrong theme. Defaults to
+// light regardless of OS preference - dark is opt-in via the toggle, not
+// inherited from the system.
 function resolveInitialTheme() {
   if (typeof window === "undefined") return "light";
   const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored === "light" || stored === "dark") return stored;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return stored === "dark" ? "dark" : "light";
 }
 
 export function ThemeProvider({ children }) {
@@ -29,15 +30,6 @@ export function ThemeProvider({ children }) {
     );
     return () => cancelAnimationFrame(frame);
   }, [theme]);
-
-  // Follow the OS while the user hasn't made an explicit choice.
-  useEffect(() => {
-    if (localStorage.getItem(STORAGE_KEY)) return;
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = (e) => setTheme(e.matches ? "dark" : "light");
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
 
   const toggle = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 

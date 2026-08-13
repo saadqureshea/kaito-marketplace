@@ -82,6 +82,25 @@
     font-family: "Noto Nastaliq Urdu", "Fraunces", serif;
   }
 
+  /* Nastaliq is diagonal and richly connected - Fraunces' tight leading and
+     negative tracking (both tuned for a Latin serif) crush its ascenders and
+     descenders into neighbouring lines. Undo both wherever Urdu renders. */
+  html[lang="ur"] {
+    line-height: 1.9;
+  }
+  html[lang="ur"] .font-display,
+  html[lang="ur"] h1,
+  html[lang="ur"] h2,
+  html[lang="ur"] h3,
+  html[lang="ur"] h4 {
+    letter-spacing: normal;
+    line-height: 2.1;
+  }
+  html[lang="ur"] .leading-tight,
+  html[lang="ur"] .leading-snug {
+    line-height: 2 !important;
+  }
+
   /* Applied for one frame while the theme swaps. Elements carrying Tailwind's
      `transition` utility otherwise keep their previously-computed colour when
      the underlying custom property changes, leaving cards stuck on the old

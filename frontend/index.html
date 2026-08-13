@@ -12,15 +12,14 @@
       rel="stylesheet"
     />
     <script>
-      // Applies the stored/system theme before first paint so the page never
-      // flashes light before React mounts. Mirrors ThemeContext's logic.
+      // Applies the stored theme before first paint so the page never
+      // flashes the wrong theme. Mirrors ThemeContext's logic - defaults to
+      // light unless the user explicitly chose dark.
       (function () {
         try {
-          var stored = localStorage.getItem("kaito_theme");
-          var dark =
-            stored === "dark" ||
-            (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches);
-          if (dark) document.documentElement.classList.add("dark");
+          if (localStorage.getItem("kaito_theme") === "dark") {
+            document.documentElement.classList.add("dark");
+          }
         } catch (e) {}
       })();
       // Applies the stored language/direction before first paint. Mirrors
